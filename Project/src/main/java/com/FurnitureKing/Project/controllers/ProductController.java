@@ -2,9 +2,13 @@ package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.repositories.ProductRepository;
+import jdk.jfr.Category;
+import jdk.jfr.Description;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,19 +38,26 @@ public class ProductController {
 
     /* Search 1 product */
     @GetMapping("/products/{productId}")
-    public Optional<Product> getProduct(@PathVariable final String productId) {
+    public Optional<Product> getProduct(@PathVariable final ObjectId productId) {
         return productRepository.findById(productId);
+    }
+
+    /* Get all products from 1 category*/
+    @GetMapping("/products/{categoryId}")
+    public List<Product> getCategoryProducts(@PathVariable final Integer categoryId) {
+        return productRepository.findProductByCategory(categoryId);
     }
 
     /* Delete 1 product */
     @DeleteMapping("/products/{productId}")
-    public List<Product> deleteProduct(@PathVariable final String productId) {
+    public List<Product> deleteProduct(@PathVariable final ObjectId productId) {
         productRepository.deleteById(productId);
         return getProducts();
     }
 
+    /* Update 1 product */
     @PutMapping("/products/{productId}")
-    public List<Product> updateProduct(@PathVariable final String productId, @RequestBody Product productmaj) {
+    public List<Product> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productmaj) {
         Optional<Product> product = productRepository.findById(productId);
         product.ifPresent(p -> {
             p.setName(productmaj.getName());
@@ -55,6 +66,14 @@ public class ProductController {
             p.setStar(productmaj.getStar());
             p.setWidth(productmaj.getWidth());
             p.setLength(productmaj.getLength());
+            p.setCategory(productmaj.getCategory());
+            p.setPrice(productmaj.getPrice());
+            p.setDescription(productmaj.getDescription());
+            p.setDesc1(productmaj.getDesc1());
+            p.setDesc2(productmaj.getDesc2());
+            p.setCreatedAt(productmaj.getCreatedAt());
+            p.setUpdatedAt(productmaj.getUpdatedAt());
+
             productRepository.save(p);
         });
         return getProducts();

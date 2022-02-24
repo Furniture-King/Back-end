@@ -21,17 +21,6 @@ public class ProjectApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		if (productRepository.findAll().isEmpty()) {
-			productRepository.save(new Product(
-					"Rohat manual",
-					"Bleu",
-					1,
-					5,
-					60,
-					60));
-		}
-
 		for(Product product : productRepository.findAll()){
 			System.out.println(product);
 		}
