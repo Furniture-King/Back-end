@@ -11,7 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository
-        extends MongoRepository<Product,String> {
+        extends MongoRepository<Product,ObjectId> {
+
 
     @Query("{ 'category' : ?0 }")
     List<Product> findProductByCategory(Integer category);

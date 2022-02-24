@@ -38,7 +38,6 @@ public class Product {
     @Field
     private Date updatedAt;
 
-
     public Product() {
     }
 
@@ -202,17 +201,17 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
-                ", stock=" + stock + '\'' +
-                ", star=" + star + '\'' +
-                ", width=" + width + '\'' +
-                ", length=" + length + '\'' +
-                ", category=" + category + '\'' +
-                ", price=" + price + '\'' +
-                ", description=" + description + '\'' +
-                ", desc1=" + desc1 + '\'' +
-                ", desc2=" + desc2 + '\'' +
-                ", createdAt=" + createdAt + '\'' +
-                ", updatedAt=" + updatedAt + '\'' +
+                ", stock=" + stock +
+                ", star=" + star +
+                ", width=" + width +
+                ", length=" + length +
+                ", category=" + category +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", desc1='" + desc1 + '\'' +
+                ", desc2='" + desc2 + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
