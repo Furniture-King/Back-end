@@ -2,13 +2,10 @@ package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.repositories.ProductRepository;
-import jdk.jfr.Category;
-import jdk.jfr.Description;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 

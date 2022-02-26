@@ -2,13 +2,12 @@ package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Client;
 import com.FurnitureKing.Project.repositories.ClientRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@RestController
 public class ClientController {
 
     private final ClientRepository clientRepository;

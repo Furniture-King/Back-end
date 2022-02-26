@@ -5,7 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 @Document(collection = "client")
 public class Client {
@@ -18,15 +19,13 @@ public class Client {
     @Field
     private Integer civility;
     @Field
-    private Integer lastName;
+    private String lastName;
     @Field
-    private Integer firstName;
+    private String firstName;
     @Field
-    private Integer telephone;
+    private String phone;
     @Field
     private Integer nbConnection;
-    @Field
-    private Double registrationDate;
     @Field
     private String favProduct;
     @Field
@@ -41,11 +40,10 @@ public class Client {
                   String email,
                   String password,
                   Integer civility,
-                  Integer lastName,
-                  Integer firstName,
-                  Integer telephone,
+                  String lastName,
+                  String firstName,
+                  String phone,
                   Integer nbConnection,
-                  Double registrationDate,
                   String favProduct,
                   Date createdAt,
                   Date updatedAt) {
@@ -55,9 +53,8 @@ public class Client {
         this.civility = civility;
         this.lastName = lastName;
         this.firstName = firstName;
-        this.telephone = telephone;
+        this.phone = phone;
         this.nbConnection = nbConnection;
-        this.registrationDate = registrationDate;
         this.favProduct = favProduct;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -67,11 +64,10 @@ public class Client {
                   String email,
                   String password,
                   Integer civility,
-                  Integer lastName,
-                  Integer firstName,
-                  Integer telephone,
+                  String lastName,
+                  String firstName,
+                  String phone,
                   Integer nbConnection,
-                  Double registrationDate,
                   String favProduct,
                   Date createdAt,
                   Date updatedAt) {
@@ -80,9 +76,8 @@ public class Client {
         this.civility = civility;
         this.lastName = lastName;
         this.firstName = firstName;
-        this.telephone = telephone;
+        this.phone = phone;
         this.nbConnection = nbConnection;
-        this.registrationDate = registrationDate;
         this.favProduct = favProduct;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -100,20 +95,17 @@ public class Client {
     public Integer getCivility() {return civility;}
     public void setCivility(Integer civility) {this.civility = civility;}
 
-    public Integer getLastName() {return lastName;}
-    public void setLastName(Integer lastName) {this.lastName = lastName;}
+    public String getLastName() {return lastName;}
+    public void setLastName(String lastName) {this.lastName = lastName;}
 
-    public Integer getFirstName() {return firstName;}
-    public void setFirstName(Integer firstName) {this.firstName = firstName;}
+    public String getFirstName() {return firstName;}
+    public void setFirstName(String firstName) {this.firstName = firstName;}
 
-    public Integer getTelephone() {return telephone;}
-    public void setTelephone(Integer telephone) {this.telephone = telephone;}
+    public String getPhone() {return phone;}
+    public void setPhone(String phone) {this.phone = phone;}
 
     public Integer getNbConnection() {return nbConnection;}
     public void setNbConnection(Integer nbConnection) {this.nbConnection = nbConnection;}
-
-    public Double getRegistrationDate() {return registrationDate;}
-    public void setRegistrationDate(Double registrationDate) {this.registrationDate = registrationDate;}
 
     public String getFavProduct() {return favProduct;}
     public void setFavProduct(String favProduct) {this.favProduct = favProduct;}
@@ -133,9 +125,8 @@ public class Client {
                 ", civility=" + civility +
                 ", lastName=" + lastName +
                 ", firstName=" + firstName +
-                ", telephone=" + telephone +
+                ", phone=" + phone +
                 ", nbConnection=" + nbConnection +
-                ", registrationDate=" + registrationDate +
                 ", favProduct='" + favProduct + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
