@@ -1,7 +1,9 @@
 package com.FurnitureKing.Project.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -13,9 +15,13 @@ public class Client {
     @Id
     private ObjectId id;
     @Field
+    private Integer status;
+    @Indexed(unique = true)
     private String email;
     @Field
-    private String password;
+    private String passwordHash;
+    @Field
+    private String passwordSalt;
     @Field
     private Integer civility;
     @Field
@@ -37,8 +43,10 @@ public class Client {
     }
 
     public Client(ObjectId id,
+                  Integer status,
                   String email,
-                  String password,
+                  String passwordHash,
+                  String passwordSalt,
                   Integer civility,
                   String lastName,
                   String firstName,
@@ -48,8 +56,10 @@ public class Client {
                   Date createdAt,
                   Date updatedAt) {
         this.id = id;
+        this.status = status;
         this.email = email;
-        this.password = password;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
         this.civility = civility;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -61,8 +71,10 @@ public class Client {
     }
 
     public Client(
+                  Integer status,
                   String email,
-                  String password,
+                  String passwordHash,
+                  String passwordSalt,
                   Integer civility,
                   String lastName,
                   String firstName,
@@ -71,8 +83,10 @@ public class Client {
                   String favProduct,
                   Date createdAt,
                   Date updatedAt) {
+        this.status = status;
         this.email = email;
-        this.password = password;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
         this.civility = civility;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -86,11 +100,17 @@ public class Client {
     public ObjectId getId() {return id;}
     public void setId(ObjectId id) {this.id = id;}
 
+    public Integer getStatus() {return status;}
+    public void setStatus(Integer status) {this.status = status;}
+
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}
 
-    public String getPassword() {return password;}
-    public void setPassword(String password) {this.password = password;}
+    public String getPasswordHash() {return passwordHash;}
+    public void setPasswordHash(String passwordHash) {this.passwordHash = passwordHash;}
+
+    public String getPasswordSalt() {return passwordSalt;}
+    public void setPasswordSalt(String passwordSalt) {this.passwordSalt = passwordSalt;}
 
     public Integer getCivility() {return civility;}
     public void setCivility(Integer civility) {this.civility = civility;}
@@ -120,8 +140,10 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "id=" + id +
+                ", status=" + status +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", passwordSalt='" + passwordSalt + '\'' +
                 ", civility=" + civility +
                 ", lastName=" + lastName +
                 ", firstName=" + firstName +
