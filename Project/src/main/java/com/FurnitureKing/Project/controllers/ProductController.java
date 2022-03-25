@@ -19,14 +19,6 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-
-    /* Create product */
-    @PostMapping(value = "/products")
-    public List<Product> addProducts(@RequestBody Product product){
-        productRepository.insert(product);
-        return getProducts();
-    }
-
     /* Get all products */
     @GetMapping("/products")
     public List<Product> getProducts() {
@@ -34,7 +26,7 @@ public class ProductController {
     }
 
     /* Search 1 product */
-    @GetMapping("/products/{productId}")
+    @GetMapping("/products/id/{productId}")
     public Optional<Product> getProduct(@PathVariable final ObjectId productId) {
         return productRepository.findById(productId);
     }
@@ -45,15 +37,22 @@ public class ProductController {
         return productRepository.findProductByCategory(categoryId);
     }
 
+    /* Create product */
+    @PostMapping(value = "/products/post")
+    public List<Product> addProduct(@RequestBody Product product){
+        productRepository.insert(product);
+        return getProducts();
+    }
+
     /* Delete 1 product */
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping("/products/delete/{productId}")
     public List<Product> deleteProduct(@PathVariable final ObjectId productId) {
         productRepository.deleteById(productId);
         return getProducts();
     }
 
     /* Update 1 product */
-    @PutMapping("/products/{productId}")
+    @PutMapping("/products/put/{productId}")
     public List<Product> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productmaj) {
         Optional<Product> product = productRepository.findById(productId);
         product.ifPresent(p -> {
