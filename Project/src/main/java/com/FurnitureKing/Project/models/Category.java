@@ -4,13 +4,15 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-public class Picture {
+import java.util.Date;
+
+public class Category {
     @Id
     private ObjectId id;
     @Field
-    private ObjectId product_id;
+    private ObjectId title;
     @Field
-    private String img; /* >>>>>>>> voir pour azure */
+    private Date createdAt;
     @Field
-    private Integer resolution;
+    private Date updatedAt;
 }

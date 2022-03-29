@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
+import java.lang.reflect.Array;
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "client")
 public class Client {
@@ -29,11 +31,11 @@ public class Client {
     @Field
     private String firstName;
     @Field
-    private String phone;
+    private Integer phone;
     @Field
     private Integer nbConnection;
     @Field
-    private String favProduct;
+    private List<String> favProduct;
     @Field
     private Date createdAt;
     @Field
@@ -50,9 +52,9 @@ public class Client {
                   Integer civility,
                   String lastName,
                   String firstName,
-                  String phone,
+                  Integer phone,
                   Integer nbConnection,
-                  String favProduct,
+                  List<String> favProduct,
                   Date createdAt,
                   Date updatedAt) {
         this.id = id;
@@ -78,9 +80,9 @@ public class Client {
                   Integer civility,
                   String lastName,
                   String firstName,
-                  String phone,
+                  Integer phone,
                   Integer nbConnection,
-                  String favProduct,
+                  List<String> favProduct,
                   Date createdAt,
                   Date updatedAt) {
         this.status = status;
@@ -121,14 +123,14 @@ public class Client {
     public String getFirstName() {return firstName;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
 
-    public String getPhone() {return phone;}
-    public void setPhone(String phone) {this.phone = phone;}
+    public Integer getPhone() {return phone;}
+    public void setPhone(Integer phone) {this.phone = phone;}
 
     public Integer getNbConnection() {return nbConnection;}
     public void setNbConnection(Integer nbConnection) {this.nbConnection = nbConnection;}
 
-    public String getFavProduct() {return favProduct;}
-    public void setFavProduct(String favProduct) {this.favProduct = favProduct;}
+    public List<String> getFavProduct() {return favProduct;}
+    public void setFavProduct(List<String> favProduct) {this.favProduct = favProduct;}
 
     public Date getCreatedAt() {return createdAt;}
     public void setCreatedAt(Date createdAt) {this.createdAt = createdAt;}

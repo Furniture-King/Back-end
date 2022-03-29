@@ -3,14 +3,21 @@ package com.FurnitureKing.Project.models;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
+import java.util.Date;
 
-public class Picture {
+public class Order {
     @Id
     private ObjectId id;
     @Field
-    private ObjectId product_id;
+    private String address;
     @Field
-    private String img; /* >>>>>>>> voir pour azure */
+    private String city;
     @Field
-    private Integer resolution;
+    private Integer postalCode;
+    @Field
+    private Integer nb_package;
+    @Field
+    private Date createdAt;
+    @Field
+    private Date updatedAt;
 }
