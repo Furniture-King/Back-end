@@ -36,9 +36,12 @@ public class Client {
     private Integer nbConnection;
     @Field
     private List<String> favProduct;
+
     @Field
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date createdAt;
     @Field
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date updatedAt;
 
     public Client(){

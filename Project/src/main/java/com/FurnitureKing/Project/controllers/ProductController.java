@@ -59,7 +59,7 @@ public class ProductController {
             p.setName(productmaj.getName());
             p.setColor(productmaj.getColor());
             p.setStock(productmaj.getStock());
-            p.setStar(productmaj.getStar());
+            p.setStars(productmaj.getStars());
             p.setWidth(productmaj.getWidth());
             p.setLength(productmaj.getLength());
             p.setCategory(productmaj.getCategory());

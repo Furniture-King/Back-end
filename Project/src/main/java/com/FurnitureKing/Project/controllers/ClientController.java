@@ -46,23 +46,28 @@ public class ClientController {
 
     /* Sign-up */
     @PostMapping(value = "/clients/sign-up")
-    public List<Client> addClient(@RequestBody Client client){
+    public Client addClient(@RequestBody Client client){
         System.out.println(client);
         String[] hshPsw = Password.Hash(client.getPasswordHash());
         client.setPasswordHash(hshPsw[0]);
         client.setPasswordSalt(hshPsw[1]);
         clientRepository.insert(client);
-        return getClients();
+        return client;
     }
 
-    /* Sign-in check */ /* voir avec Samuel comment je reçoit l'idClient et le psw écrit en param */
+    /* Sign-in check */
     @GetMapping(value = "/clients/sign-in")
-    public Boolean checkClient(@RequestBody String psw, ObjectId clientId){
-        Optional<Client> client = getClient(new ObjectId("621aa7e835f8722d52702cc0")); //ici put l'id en ObjectId type
+    public Object checkClient(@RequestBody String psw, String email){
+        Optional<Client> client = clientRepository.findByEmail(email);
         final Boolean[] bool = {false};
         client.ifPresent(c -> {
             bool[0] = Password.Check(psw, c.getPasswordHash(), c.getPasswordSalt());
         });
-        return bool[0];
+        if(bool[0] == true){
+
+            return client;
+        }else{
+            return null;
+        }
     }
 }

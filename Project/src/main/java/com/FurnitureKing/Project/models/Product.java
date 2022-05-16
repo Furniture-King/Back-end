@@ -23,7 +23,7 @@ public class Product {
     @Field
     private Array fav;
     @Field
-    private Integer star;
+    private Integer stars;
     @Field
     private Integer width;
     @Field
@@ -53,7 +53,7 @@ public class Product {
             String color,
             Integer stock,
             Array fav,
-            Integer star,
+            Integer stars,
             Integer width,
             Integer length,
             Integer category,
@@ -70,7 +70,7 @@ public class Product {
         this.color = color;
         this.stock = stock;
         this.fav = fav;
-        this.star = star;
+        this.stars = stars;
         this.width = width;
         this.length = length;
         this.category = category;
@@ -88,7 +88,7 @@ public class Product {
             String color,
             Integer stock,
             Array fav,
-            Integer star,
+            Integer stars,
             Integer width,
             Integer length,
             Integer category,
@@ -103,7 +103,7 @@ public class Product {
         this.color = color;
         this.stock = stock;
         this.fav = fav;
-        this.star = star;
+        this.stars = stars;
         this.width = width;
         this.length = length;
         this.category = category;
@@ -163,12 +163,12 @@ public class Product {
         this.fav = fav;
     }
 
-    public Integer getStar() {
-        return star;
+    public Integer getStars() {
+        return stars;
     }
 
-    public void setStar(Integer star) {
-        this.star = star;
+    public void setStars(Integer stars) {
+        this.stars = stars;
     }
 
     public Integer getWidth() {
@@ -252,7 +252,7 @@ public class Product {
                 ", color='" + color + '\'' +
                 ", stock=" + stock +
                 ", fav=" + fav +
-                ", star=" + star +
+                ", stars=" + stars +
                 ", width=" + width +
                 ", length=" + length +
                 ", category=" + category +
