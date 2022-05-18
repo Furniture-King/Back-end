@@ -43,7 +43,7 @@
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -88,6 +88,8 @@
       <workItem from="1652798533791" duration="623000" />
       <workItem from="1652815533187" duration="1231000" />
       <workItem from="1652857856206" duration="8811000" />
+      <workItem from="1652893817840" duration="1614000" />
+      <workItem from="1652900977527" duration="2025000" />
     </task>
     <servers />
   </component>
