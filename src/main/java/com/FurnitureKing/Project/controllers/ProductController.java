@@ -1,6 +1,7 @@
 package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Product;
+import com.FurnitureKing.Project.utils.CurrentDateTime;
 import com.FurnitureKing.Project.repositories.ProductRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class ProductController {
     /* Create product */
     @PostMapping(value = "/products/post")
     public List<Product> addProduct(@RequestBody Product product){
+        product.setCreatedAt(CurrentDateTime.getCurrentDateTime());
         productRepository.insert(product);
         return getProducts();
     }
@@ -58,11 +60,11 @@ public class ProductController {
         product.ifPresent(p -> {
             p.setName(productmaj.getName());
             p.setColor(productmaj.getColor());
+            p.setSrcImg(productmaj.getSrcImg());
             p.setStock(productmaj.getStock());
             p.setStars(productmaj.getStars());
             p.setWidth(productmaj.getWidth());
             p.setLength(productmaj.getLength());
-            p.setCategory(productmaj.getCategory());
             p.setPrice(productmaj.getPrice());
             p.setDescription(productmaj.getDescription());
             p.setDesc1(productmaj.getDesc1());

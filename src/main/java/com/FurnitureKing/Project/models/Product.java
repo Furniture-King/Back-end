@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.lang.reflect.Array;
 import java.util.Date;
 
 @Document(collection = "product")
@@ -13,23 +12,21 @@ public class Product {
     @Id
     private ObjectId id;
     @Field
-    private ObjectId category_id;
+    private Integer category_id;
     @Field
     private String name;
     @Field
     private String color;
     @Field
+    private String srcImg;
+    @Field
     private Integer stock;
     @Field
-    private Array fav;
+    private Float stars;
     @Field
-    private Integer stars;
+    private Float width;
     @Field
-    private Integer width;
-    @Field
-    private Integer length;
-    @Field
-    private Integer category;
+    private Float length;
     @Field
     private Double price;
     @Field
@@ -48,15 +45,14 @@ public class Product {
 
     public Product(
             ObjectId id,
-            ObjectId category_id,
+            Integer category_id,
             String name,
             String color,
+            String srcImg,
             Integer stock,
-            Array fav,
-            Integer stars,
-            Integer width,
-            Integer length,
-            Integer category,
+            Float stars,
+            Float width,
+            Float length,
             Double price,
             String description,
             String desc1,
@@ -68,12 +64,11 @@ public class Product {
         this.category_id = category_id;
         this.name = name;
         this.color = color;
+        this.srcImg = srcImg;
         this.stock = stock;
-        this.fav = fav;
         this.stars = stars;
         this.width = width;
         this.length = length;
-        this.category = category;
         this.price = price;
         this.description = description;
         this.desc1 = desc1;
@@ -83,15 +78,14 @@ public class Product {
     }
 
     public Product(
-            ObjectId category_id,
+            Integer category_id,
             String name,
             String color,
+            String srcImg,
             Integer stock,
-            Array fav,
-            Integer stars,
-            Integer width,
-            Integer length,
-            Integer category,
+            Float stars,
+            Float width,
+            Float length,
             Double price,
             String description,
             String desc1,
@@ -101,12 +95,11 @@ public class Product {
         this.category_id = category_id;
         this.name = name;
         this.color = color;
+        this.srcImg = srcImg;
         this.stock = stock;
-        this.fav = fav;
         this.stars = stars;
         this.width = width;
         this.length = length;
-        this.category = category;
         this.price = price;
         this.description = description;
         this.desc1 = desc1;
@@ -123,11 +116,11 @@ public class Product {
         this.id = id;
     }
 
-    public ObjectId getCategory_id() {
+    public Integer getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(ObjectId category_id) {
+    public void setCategory_id(Integer category_id) {
         this.category_id = category_id;
     }
 
@@ -147,6 +140,10 @@ public class Product {
         this.color = color;
     }
 
+    public String getSrcImg(){return srcImg;}
+
+    public void setSrcImg(String srcImg){this.srcImg = srcImg;}
+
     public Integer getStock() {
         return stock;
     }
@@ -155,44 +152,28 @@ public class Product {
         this.stock = stock;
     }
 
-    public Array getFav() {
-        return fav;
-    }
-
-    public void setFav(Array fav) {
-        this.fav = fav;
-    }
-
-    public Integer getStars() {
+    public Float getStars() {
         return stars;
     }
 
-    public void setStars(Integer stars) {
+    public void setStars(Float stars) {
         this.stars = stars;
     }
 
-    public Integer getWidth() {
+    public Float getWidth() {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(Float width) {
         this.width = width;
     }
 
-    public Integer getLength() {
+    public Float getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
+    public void setLength(Float length) {
         this.length = length;
-    }
-
-    public Integer getCategory() {
-        return category;
-    }
-
-    public void setCategory(Integer category) {
-        this.category = category;
     }
 
     public Double getPrice() {
@@ -250,12 +231,11 @@ public class Product {
                 ", category_id=" + category_id +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
+                ", srcImg=" + srcImg +
                 ", stock=" + stock +
-                ", fav=" + fav +
                 ", stars=" + stars +
                 ", width=" + width +
                 ", length=" + length +
-                ", category=" + category +
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", desc1='" + desc1 + '\'' +

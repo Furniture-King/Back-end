@@ -58,16 +58,17 @@ public class ClientController {
     /* Sign-in check */
     @GetMapping(value = "/clients/sign-in")
     public Object checkClient(@RequestBody String psw, String email){
+        System.out.println("début");
+        System.out.println(psw);
         Optional<Client> client = clientRepository.findByEmail(email);
         final Boolean[] bool = {false};
         client.ifPresent(c -> {
             bool[0] = Password.Check(psw, c.getPasswordHash(), c.getPasswordSalt());
         });
         if(bool[0] == true){
-
             return client;
         }else{
-            return null;
+            return "ok";
         }
     }
 }
