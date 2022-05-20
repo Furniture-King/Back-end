@@ -2,6 +2,7 @@ package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Client;
 import com.FurnitureKing.Project.repositories.ClientRepository;
+import com.FurnitureKing.Project.utils.CurrentDateTime;
 import com.FurnitureKing.Project.utils.Password;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,8 @@ public class ClientController {
     /* Sign-up */
     @PostMapping(value = "/clients/sign-up")
     public Client addClient(@RequestBody Client client){
-        System.out.println(client);
+        client.setCreatedAt(CurrentDateTime.getCurrentDateTime());
+        client.setNbConnection(1);
         String[] hshPsw = Password.Hash(client.getPasswordHash());
         client.setPasswordHash(hshPsw[0]);
         client.setPasswordSalt(hshPsw[1]);
@@ -57,18 +59,41 @@ public class ClientController {
 
     /* Sign-in check */
     @GetMapping(value = "/clients/sign-in")
-    public Object checkClient(@RequestBody String psw, String email){
-        System.out.println("début");
-        System.out.println(psw);
-        Optional<Client> client = clientRepository.findByEmail(email);
+    public Object checkClient(@RequestBody Client data){
+        System.out.println("Entrée dans le fonction");
+        Optional<Client> client = clientRepository.findByEmail(data.getEmail());
         final Boolean[] bool = {false};
         client.ifPresent(c -> {
-            bool[0] = Password.Check(psw, c.getPasswordHash(), c.getPasswordSalt());
+            System.out.println("client est bien présent");
+            c.setNbConnection(c.getNbConnection() + 1);
+            System.out.println(Password.Check(data.getPasswordHash(), c.getPasswordHash(), c.getPasswordSalt()));
+            bool[0] = Password.Check(data.getPasswordHash(), c.getPasswordHash(), c.getPasswordSalt());
         });
-        if(bool[0] == true){
+        System.out.println(bool[0]);
+        if(bool[0]){
             return client;
         }else{
-            return "ok";
+            return "pas bon";
         }
+    }
+
+    @PutMapping("/clients/put/{clientId}")
+    public Optional<Client> updateProduct(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
+        Optional<Client> client = clientRepository.findById(clientId);
+        client.ifPresent(c -> {
+            c.setStatus(clientUpdate.getStatus());
+            c.setEmail(clientUpdate.getEmail());
+            c.setCivility(clientUpdate.getCivility());
+            c.setLastName(clientUpdate.getLastName());
+            c.setFirstName(clientUpdate.getFirstName());
+            c.setAddress(clientUpdate.getAddress());
+            c.setPostalCode(clientUpdate.getPostalCode());
+            c.setCity(clientUpdate.getCity());
+            c.setPhone(clientUpdate.getPhone());
+            c.setFavProduct(clientUpdate.getFavProduct());
+            c.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
+            clientRepository.save(c);
+        });
+        return getClient(clientId);
     }
 }

@@ -55,7 +55,7 @@ public class ProductController {
 
     /* Update 1 product */
     @PutMapping("/products/put/{productId}")
-    public List<Product> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productmaj) {
+    public Optional<Product> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productmaj) {
         Optional<Product> product = productRepository.findById(productId);
         product.ifPresent(p -> {
             p.setName(productmaj.getName());
@@ -69,11 +69,9 @@ public class ProductController {
             p.setDescription(productmaj.getDescription());
             p.setDesc1(productmaj.getDesc1());
             p.setDesc2(productmaj.getDesc2());
-            p.setCreatedAt(productmaj.getCreatedAt());
-            p.setUpdatedAt(productmaj.getUpdatedAt());
-
+            p.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
             productRepository.save(p);
         });
-        return getProducts();
+        return getProduct(productId);
     }
 }

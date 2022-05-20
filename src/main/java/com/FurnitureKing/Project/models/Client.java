@@ -31,7 +31,13 @@ public class Client {
     @Field
     private String firstName;
     @Field
-    private Integer phone;
+    private String address;
+    @Field
+    private String postalCode;
+    @Field
+    private String city;
+    @Field
+    private String phone;
     @Field
     private Integer nbConnection;
     @Field
@@ -55,7 +61,10 @@ public class Client {
                   Integer civility,
                   String lastName,
                   String firstName,
-                  Integer phone,
+                  String address,
+                  String postalCode,
+                  String city,
+                  String phone,
                   Integer nbConnection,
                   List<String> favProduct,
                   Date createdAt,
@@ -68,6 +77,9 @@ public class Client {
         this.civility = civility;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
         this.phone = phone;
         this.nbConnection = nbConnection;
         this.favProduct = favProduct;
@@ -83,7 +95,10 @@ public class Client {
                   Integer civility,
                   String lastName,
                   String firstName,
-                  Integer phone,
+                  String address,
+                  String postalCode,
+                  String city,
+                  String phone,
                   Integer nbConnection,
                   List<String> favProduct,
                   Date createdAt,
@@ -95,6 +110,9 @@ public class Client {
         this.civility = civility;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
         this.phone = phone;
         this.nbConnection = nbConnection;
         this.favProduct = favProduct;
@@ -126,8 +144,17 @@ public class Client {
     public String getFirstName() {return firstName;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
 
-    public Integer getPhone() {return phone;}
-    public void setPhone(Integer phone) {this.phone = phone;}
+    public String getAddress() {return address;}
+    public void setAddress(String address) {this.address = address;}
+
+    public String getPostalCode() {return postalCode;}
+    public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
+
+    public String getCity() {return city;}
+    public void setCity(String city) {this.city = city;}
+
+    public String getPhone() {return phone;}
+    public void setPhone(String phone) {this.phone = phone;}
 
     public Integer getNbConnection() {return nbConnection;}
     public void setNbConnection(Integer nbConnection) {this.nbConnection = nbConnection;}
