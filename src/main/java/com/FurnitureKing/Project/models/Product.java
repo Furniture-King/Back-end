@@ -12,7 +12,7 @@ public class Product {
     @Id
     private ObjectId id;
     @Field
-    private Integer category_id;
+    private String categoryName;
     @Field
     private String name;
     @Field
@@ -45,7 +45,7 @@ public class Product {
 
     public Product(
             ObjectId id,
-            Integer category_id,
+            String categoryName,
             String name,
             String color,
             String srcImg,
@@ -61,7 +61,7 @@ public class Product {
             Date updatedAt
     ) {
         this.id = id;
-        this.category_id = category_id;
+        this.categoryName = categoryName;
         this.name = name;
         this.color = color;
         this.srcImg = srcImg;
@@ -78,7 +78,7 @@ public class Product {
     }
 
     public Product(
-            Integer category_id,
+            String categoryName,
             String name,
             String color,
             String srcImg,
@@ -92,7 +92,7 @@ public class Product {
             String desc2,
             Date createdAt,
             Date updatedAt) {
-        this.category_id = category_id;
+        this.categoryName = categoryName;
         this.name = name;
         this.color = color;
         this.srcImg = srcImg;
@@ -116,12 +116,12 @@ public class Product {
         this.id = id;
     }
 
-    public Integer getCategory_id() {
-        return category_id;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getName() {
@@ -228,7 +228,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", category_id=" + category_id +
+                ", categoryName=" + categoryName +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
                 ", srcImg=" + srcImg +

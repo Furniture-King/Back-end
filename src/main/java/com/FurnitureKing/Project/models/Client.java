@@ -17,7 +17,7 @@ public class Client {
     @Id
     private ObjectId id;
     @Field
-    private Integer status;
+    private Integer role;
     @Indexed(unique = true)
     private String email;
     @Field
@@ -54,7 +54,7 @@ public class Client {
     }
 
     public Client(ObjectId id,
-                  Integer status,
+                  Integer role,
                   String email,
                   String passwordHash,
                   String passwordSalt,
@@ -70,7 +70,7 @@ public class Client {
                   Date createdAt,
                   Date updatedAt) {
         this.id = id;
-        this.status = status;
+        this.role = role;
         this.email = email;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
@@ -88,7 +88,7 @@ public class Client {
     }
 
     public Client(
-                  Integer status,
+                  Integer role,
                   String email,
                   String passwordHash,
                   String passwordSalt,
@@ -103,7 +103,7 @@ public class Client {
                   List<String> favProduct,
                   Date createdAt,
                   Date updatedAt) {
-        this.status = status;
+        this.role = role;
         this.email = email;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
@@ -123,8 +123,8 @@ public class Client {
     public ObjectId getId() {return id;}
     public void setId(ObjectId id) {this.id = id;}
 
-    public Integer getStatus() {return status;}
-    public void setStatus(Integer status) {this.status = status;}
+    public Integer getRole() {return role;}
+    public void setRole(Integer role) {this.role = role;}
 
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}
@@ -172,7 +172,7 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", status=" + status +
+                ", role=" + role +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 ", passwordSalt='" + passwordSalt + '\'' +

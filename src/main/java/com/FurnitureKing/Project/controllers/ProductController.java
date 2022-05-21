@@ -33,9 +33,9 @@ public class ProductController {
     }
 
     /* Get all products from 1 category*/
-    @GetMapping("/products/{categoryId}")
-    public List<Product> getCategoryProducts(@PathVariable final Integer categoryId) {
-        return productRepository.findProductByCategory(categoryId);
+    @GetMapping("/products/{categoryName}")
+    public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
+        return productRepository.findProductByCategory(categoryName);
     }
 
     /* Create product */

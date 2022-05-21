@@ -60,20 +60,17 @@ public class ClientController {
     /* Sign-in check */
     @GetMapping(value = "/clients/sign-in")
     public Object checkClient(@RequestBody Client data){
-        System.out.println("Entrée dans le fonction");
         Optional<Client> client = clientRepository.findByEmail(data.getEmail());
         final Boolean[] bool = {false};
         client.ifPresent(c -> {
-            System.out.println("client est bien présent");
             c.setNbConnection(c.getNbConnection() + 1);
-            System.out.println(Password.Check(data.getPasswordHash(), c.getPasswordHash(), c.getPasswordSalt()));
-            bool[0] = Password.Check(data.getPasswordHash(), c.getPasswordHash(), c.getPasswordSalt());
+            bool[0] = Password.Check(data.getPasswordHash(), c.getPasswordSalt());
         });
         System.out.println(bool[0]);
         if(bool[0]){
             return client;
         }else{
-            return "pas bon";
+            return "Mauvais mail ou mot de passe";
         }
     }
 
@@ -81,7 +78,7 @@ public class ClientController {
     public Optional<Client> updateProduct(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
         client.ifPresent(c -> {
-            c.setStatus(clientUpdate.getStatus());
+            c.setRole(clientUpdate.getRole());
             c.setEmail(clientUpdate.getEmail());
             c.setCivility(clientUpdate.getCivility());
             c.setLastName(clientUpdate.getLastName());
