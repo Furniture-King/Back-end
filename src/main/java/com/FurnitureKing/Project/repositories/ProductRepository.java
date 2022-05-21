@@ -14,7 +14,7 @@ public interface ProductRepository
         extends MongoRepository<Product,ObjectId> {
 
 
-    @Query("{ 'category' : ?0 }")
+    @Query("{ 'categoryName' : ?0 }")
     List<Product> findProductByCategory(String category);
 
     void deleteById(ObjectId productId);

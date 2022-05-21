@@ -3,6 +3,7 @@ package com.FurnitureKing.Project.controllers;
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import com.FurnitureKing.Project.repositories.ProductRepository;
+import com.FurnitureKing.Project.utils.DataFormat;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,9 @@ public class ProductController {
     /* Get all products from 1 category*/
     @GetMapping("/products/{categoryName}")
     public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
-        return productRepository.findProductByCategory(categoryName);
+        String name = DataFormat.FormatString(categoryName);
+        System.out.println(name);
+        return productRepository.findProductByCategory(name);
     }
 
     /* Create product */

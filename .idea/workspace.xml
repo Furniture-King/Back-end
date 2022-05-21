@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8bbe05d3-18c8-4860-a902-b36ae186835d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/utils/DataFormat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/ClientRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/utils/Password.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/utils/Password.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +95,7 @@
       <workItem from="1652900977527" duration="2934000" />
       <workItem from="1652980189360" duration="9959000" />
       <workItem from="1653040700735" duration="23027000" />
-      <workItem from="1653121922413" duration="10716000" />
+      <workItem from="1653121922413" duration="13887000" />
     </task>
     <servers />
   </component>
