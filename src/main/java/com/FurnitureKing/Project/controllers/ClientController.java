@@ -49,7 +49,7 @@ public class ClientController {
     public Optional<Client> updateProduct(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
         client.ifPresent(c -> {
-            c.setRole(clientUpdate.getRole());
+            c.setRoles(clientUpdate.getRoles());
             c.setEmail(clientUpdate.getEmail());
             c.setCivility(clientUpdate.getCivility());
             c.setLastName(clientUpdate.getLastName());

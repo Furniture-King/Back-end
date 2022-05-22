@@ -32,6 +32,15 @@ public class AuthController {
         return client;
     }
 
+    @PostMapping(value = "/test/pp")
+    public Client testClient(@RequestBody Client data){
+        Client client = new Client();
+        client.setEmail(data.getEmail());
+        client.setPasswordHash(data.getPasswordHash());
+        System.out.println(client);
+        return client;
+    }
+
     /* Sign-in check */
     @PostMapping(value = "/clients/sign-in")
     public Optional<Client> checkClient(@RequestBody Client data){
@@ -41,7 +50,6 @@ public class AuthController {
             c.setNbConnection(c.getNbConnection() + 1);
             bool[0] = Password.Check(data.getPasswordHash(), c.getPasswordSalt());
         });
-
         return client;
     }
 

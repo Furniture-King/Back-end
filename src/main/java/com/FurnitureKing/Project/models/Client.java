@@ -4,48 +4,69 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
-import java.lang.reflect.Array;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "client")
 public class Client {
     @Id
     private ObjectId id;
-    @Field
-    private Integer role;
+
+    @DBRef
+    private Set<Role> roles = new HashSet<>();
+
+    @NotBlank
+    @Email
     @Indexed(unique = true)
     private String email;
+
+    @NotBlank
     @Field
     private String passwordHash;
+
     @Field
     private String passwordSalt;
+
     @Field
     private Integer civility;
+
     @Field
     private String lastName;
+
     @Field
     private String firstName;
+
     @Field
     private String address;
+
     @Field
     private String postalCode;
+
     @Field
     private String city;
+
     @Field
     private String phone;
+
     @Field
     private Integer nbConnection;
+
     @Field
     private List<String> favProduct;
 
     @Field
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date createdAt;
+
     @Field
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date updatedAt;
@@ -54,7 +75,6 @@ public class Client {
     }
 
     public Client(ObjectId id,
-                  Integer role,
                   String email,
                   String passwordHash,
                   String passwordSalt,
@@ -70,7 +90,6 @@ public class Client {
                   Date createdAt,
                   Date updatedAt) {
         this.id = id;
-        this.role = role;
         this.email = email;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
@@ -87,44 +106,16 @@ public class Client {
         this.updatedAt = updatedAt;
     }
 
-    public Client(
-                  Integer role,
-                  String email,
-                  String passwordHash,
-                  String passwordSalt,
-                  Integer civility,
-                  String lastName,
-                  String firstName,
-                  String address,
-                  String postalCode,
-                  String city,
-                  String phone,
-                  Integer nbConnection,
-                  List<String> favProduct,
-                  Date createdAt,
-                  Date updatedAt) {
-        this.role = role;
+    public Client(String email, String passwordSalt) {
         this.email = email;
-        this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
-        this.civility = civility;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.phone = phone;
-        this.nbConnection = nbConnection;
-        this.favProduct = favProduct;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public ObjectId getId() {return id;}
     public void setId(ObjectId id) {this.id = id;}
 
-    public Integer getRole() {return role;}
-    public void setRole(Integer role) {this.role = role;}
+    public Set<Role> getRoles() {return roles;}
+    public void setRoles(Set<Role> roles) {this.roles = roles;}
 
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}
@@ -172,7 +163,6 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", role=" + role +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 ", passwordSalt='" + passwordSalt + '\'' +
