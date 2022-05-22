@@ -37,7 +37,6 @@ public class ProductController {
     @GetMapping("/products/{categoryName}")
     public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
         String name = DataFormat.FormatString(categoryName);
-        System.out.println(name);
         return productRepository.findProductByCategory(name);
     }
 
