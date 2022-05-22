@@ -34,20 +34,15 @@ public class AuthController {
 
     /* Sign-in check */
     @PostMapping(value = "/clients/sign-in")
-    public Object checkClient(@RequestBody Client data){
-        System.out.println("test");
+    public Optional<Client> checkClient(@RequestBody Client data){
         Optional<Client> client = clientRepository.findByEmail(data.getEmail());
         final Boolean[] bool = {false};
         client.ifPresent(c -> {
             c.setNbConnection(c.getNbConnection() + 1);
             bool[0] = Password.Check(data.getPasswordHash(), c.getPasswordSalt());
         });
-        System.out.println(bool[0]);
-        if(bool[0]){
-            return client;
-        }else{
-            return "Mauvais mail ou mot de passe";
-        }
+
+        return client;
     }
 
 }
