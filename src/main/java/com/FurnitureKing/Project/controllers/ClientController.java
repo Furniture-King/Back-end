@@ -45,35 +45,6 @@ public class ClientController {
         return getClients();
     }
 
-    /* Sign-up */
-    @PostMapping(value = "/clients/sign-up")
-    public Client addClient(@RequestBody Client client){
-        client.setCreatedAt(CurrentDateTime.getCurrentDateTime());
-        client.setNbConnection(1);
-        String[] hshPsw = Password.Hash(client.getPasswordHash());
-        client.setPasswordHash(hshPsw[0]);
-        client.setPasswordSalt(hshPsw[1]);
-        clientRepository.insert(client);
-        return client;
-    }
-
-    /* Sign-in check */
-    @GetMapping(value = "/clients/sign-in")
-    public Object checkClient(@RequestBody Client data){
-        Optional<Client> client = clientRepository.findByEmail(data.getEmail());
-        final Boolean[] bool = {false};
-        client.ifPresent(c -> {
-            c.setNbConnection(c.getNbConnection() + 1);
-            bool[0] = Password.Check(data.getPasswordHash(), c.getPasswordSalt());
-        });
-        System.out.println(bool[0]);
-        if(bool[0]){
-            return client;
-        }else{
-            return "Mauvais mail ou mot de passe";
-        }
-    }
-
     @PutMapping("/clients/put/{clientId}")
     public Optional<Client> updateProduct(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
