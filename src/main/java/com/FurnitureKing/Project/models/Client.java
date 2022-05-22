@@ -64,12 +64,10 @@ public class Client {
     private List<String> favProduct;
 
     @Field
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-    private Date createdAt;
+    private long createdAt;
 
     @Field
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-    private Date updatedAt;
+    private long updatedAt;
 
     public Client(){
     }
@@ -87,8 +85,8 @@ public class Client {
                   String phone,
                   Integer nbConnection,
                   List<String> favProduct,
-                  Date createdAt,
-                  Date updatedAt) {
+                  long createdAt,
+                  long updatedAt) {
         this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
@@ -153,11 +151,11 @@ public class Client {
     public List<String> getFavProduct() {return favProduct;}
     public void setFavProduct(List<String> favProduct) {this.favProduct = favProduct;}
 
-    public Date getCreatedAt() {return createdAt;}
-    public void setCreatedAt(Date createdAt) {this.createdAt = createdAt;}
+    public long getCreatedAt() {return createdAt;}
+    public void setCreatedAt(long createdAt) {this.createdAt = createdAt;}
 
-    public Date getUpdatedAt() {return updatedAt;}
-    public void setUpdatedAt(Date updatedAt) {this.updatedAt = updatedAt;}
+    public long getUpdatedAt() {return updatedAt;}
+    public void setUpdatedAt(long updatedAt) {this.updatedAt = updatedAt;}
 
     @Override
     public String toString() {

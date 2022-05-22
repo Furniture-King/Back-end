@@ -36,9 +36,9 @@ public class Product {
     @Field
     private String desc2;
     @Field
-    private Date createdAt;
+    private long createdAt;
     @Field
-    private Date updatedAt;
+    private long updatedAt;
 
     public Product() {
     }
@@ -57,8 +57,8 @@ public class Product {
             String description,
             String desc1,
             String desc2,
-            Date createdAt,
-            Date updatedAt
+            long createdAt,
+            long updatedAt
     ) {
         this.id = id;
         this.categoryName = categoryName;
@@ -90,8 +90,8 @@ public class Product {
             String description,
             String desc1,
             String desc2,
-            Date createdAt,
-            Date updatedAt) {
+            long createdAt,
+            long updatedAt) {
         this.categoryName = categoryName;
         this.name = name;
         this.color = color;
@@ -208,19 +208,19 @@ public class Product {
         this.desc2 = desc2;
     }
 
-    public Date getCreatedAt() {
+    public long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public long getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(long updatedAt) {
         this.updatedAt = updatedAt;
     }
 
