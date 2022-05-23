@@ -1,0 +1,77 @@
+package com.FurnitureKing.Project.controllers;
+
+import com.FurnitureKing.Project.models.Client;
+import com.FurnitureKing.Project.models.Order;
+import com.FurnitureKing.Project.models.Product;
+import com.FurnitureKing.Project.models.Role;
+import com.FurnitureKing.Project.repositories.OrderRepository;
+import com.FurnitureKing.Project.utils.CurrentDateTime;
+import org.bson.types.ObjectId;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+public class OrderController {
+
+    private final OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository) {this.orderRepository = orderRepository;}
+
+    /* Get all orders */
+    @GetMapping("/orders")
+    public List<Order> getOrders() {
+        return (List<Order>) ResponseEntity.ok(orderRepository.findAll());
+    }
+
+    /* Search 1 order by Id */
+    @GetMapping("/orders/id/{orderId}")
+    public ResponseEntity<Optional<Order>> getOrder(@PathVariable final ObjectId orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if(order.isPresent()){
+            return ResponseEntity.ok(order);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    /* Create order */
+    @PostMapping(value = "/orders/post")
+    public ResponseEntity<String> addOrder(@RequestBody Order order){
+        order.setCreatedAt(CurrentDateTime.getCurrentDateTime());
+        if(order.getProducts().isEmpty()){
+            return ResponseEntity.badRequest().body("No product in this order");
+        }else{
+            orderRepository.insert(order);
+            return ResponseEntity.ok().body("The order is created");
+        }
+
+    }
+
+    /* Delete 1 order */
+    @DeleteMapping("/orders/delete/{orderId}")
+    public ResponseEntity<String> deleteOrder(@PathVariable final ObjectId orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if(order.isPresent()){
+            orderRepository.deleteById(orderId);
+            return ResponseEntity.ok().body("Order deleted");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    /* Update 1 client */
+    @PutMapping("/clients/put/{clientId}")
+    public ResponseEntity<Optional<Order>> updateProduct(@PathVariable final ObjectId orderId, @RequestBody Order orderUpdate) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        order.ifPresent(o -> {
+            o.setAddress(orderUpdate.getAddress());
+            o.setCity(orderUpdate.getCity());
+            o.setPostalCode(orderUpdate.getPostalCode());
+            o.setPrice(orderUpdate.getPrice());
+            o.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
+            orderRepository.save(o);
+        });
+        return ResponseEntity.ok(order);
+    }
+}

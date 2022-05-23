@@ -27,4 +27,6 @@ public class Invoice {
     private Date createdAt;
     @Field
     private Date updatedAt;
+
+    //JE SAIS PAS QUOI FAIRE DE CA MAIS CA PEUX ETRE UTILE
 }

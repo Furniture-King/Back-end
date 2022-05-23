@@ -69,8 +69,7 @@ public class Client {
     @Field
     private long updatedAt;
 
-    public Client(){
-    }
+    public Client(){}
 
     public Client(ObjectId id,
                   String email,

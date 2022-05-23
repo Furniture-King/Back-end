@@ -40,8 +40,7 @@ public class Product {
     @Field
     private long updatedAt;
 
-    public Product() {
-    }
+    public Product() {}
 
     public Product(
             ObjectId id,

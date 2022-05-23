@@ -3,9 +3,9 @@ package com.FurnitureKing.Project.controllers;
 import com.FurnitureKing.Project.models.Client;
 import com.FurnitureKing.Project.repositories.ClientRepository;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
-import com.FurnitureKing.Project.utils.Password;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,29 +24,44 @@ public class ClientController {
     /* Get all clients */
     @GetMapping("/clients")
     public List<Client> getClients() {
-        return clientRepository.findAll();}
+        return (List<Client>) ResponseEntity.ok(clientRepository.findAll());
+    }
+
 
     /* Search 1 client by Id */
     @GetMapping("/clients/id/{clientId}")
-    public Optional<Client> getClient(@PathVariable final ObjectId clientId) {
-        return clientRepository.findById(clientId);
+    public ResponseEntity<Optional<Client>> getClient(@PathVariable final ObjectId clientId) {
+        Optional<Client> client = clientRepository.findById(clientId);
+        if(client.isPresent()){
+            return ResponseEntity.ok(client);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     /* Search 1 client by email */
     @GetMapping("/clients/{email}")
-    public Optional<Client> getClient(@PathVariable final String email) {
-        return clientRepository.findByEmail(email);
+    public ResponseEntity<Optional<Client>> getClient(@PathVariable final String email) {
+        Optional<Client> client = clientRepository.findByEmail(email);
+        if(client.isPresent()){
+            return ResponseEntity.ok(client);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     /* Delete 1 client */
     @DeleteMapping("/clients/delete/{clientId}")
     public List<Client> deleteClient(@PathVariable final ObjectId clientId) {
-        clientRepository.deleteById(clientId);
-        return getClients();
+        Optional<Client> client = clientRepository.findById(clientId);
+        if(client.isPresent()){
+            clientRepository.deleteById(clientId);
+            return (List<Client>) ResponseEntity.ok().body("User deleted");
+        }
+        return (List<Client>) ResponseEntity.notFound().build();
     }
 
+    /* Update 1 client */
     @PutMapping("/clients/put/{clientId}")
-    public Optional<Client> updateProduct(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
+    public ResponseEntity<Optional<Client>> updateProduct(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
         client.ifPresent(c -> {
             c.setRoles(clientUpdate.getRoles());
@@ -62,6 +77,7 @@ public class ClientController {
             c.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
             clientRepository.save(c);
         });
-        return getClient(clientId);
+        return ResponseEntity.ok(client);
     }
+
 }

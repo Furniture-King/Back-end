@@ -10,19 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ProjectApplication implements CommandLineRunner {
 
-	private final ProductRepository productRepository;
-
-	@Autowired
-	public ProjectApplication(ProductRepository productRepository){
-		this.productRepository = productRepository;
-	}
-
 	public static void main(String[] args) {SpringApplication.run(ProjectApplication.class, args);}
 
 	@Override
 	public void run(String... args) throws Exception {
-		for(Product product : productRepository.findAll()){
-			System.out.println(product);
-		}
+		System.out.println("Bonsoir");
 	}
 }

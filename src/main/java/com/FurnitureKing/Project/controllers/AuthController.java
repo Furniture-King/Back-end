@@ -5,6 +5,7 @@ import com.FurnitureKing.Project.repositories.ClientRepository;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import com.FurnitureKing.Project.utils.Password;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -22,14 +23,14 @@ public class AuthController {
 
     /* Sign-up */
     @PostMapping(value = "/clients/sign-up")
-    public Client addClient(@RequestBody Client client){
+    public ResponseEntity<Client> addClient(@RequestBody Client client){
         client.setCreatedAt(CurrentDateTime.getCurrentDateTime());
         client.setNbConnection(1);
         String[] hshPsw = Password.Hash(client.getPasswordHash());
         client.setPasswordHash(hshPsw[0]);
         client.setPasswordSalt(hshPsw[1]);
         clientRepository.insert(client);
-        return client;
+        return ResponseEntity.ok().body(client);
     }
 
     /* Sign-in check */

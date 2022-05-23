@@ -6,6 +6,7 @@ import com.FurnitureKing.Project.repositories.ProductRepository;
 import com.FurnitureKing.Project.utils.DataFormat;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,56 +25,75 @@ public class ProductController {
     /* Get all products */
     @GetMapping("/products")
     public List<Product> getProducts() {
-        return productRepository.findAll();
+        return (List<Product>) ResponseEntity.ok(productRepository.findAll());
     }
 
     /* Search 1 product */
     @GetMapping("/products/id/{productId}")
-    public Optional<Product> getProduct(@PathVariable final ObjectId productId) {
-        return productRepository.findById(productId);
+    public ResponseEntity<Optional<Product>> getProduct(@PathVariable final ObjectId productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if(product.isPresent()){
+            return ResponseEntity.ok(product);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     /* Get all products from 1 category*/
     @GetMapping("/products/{categoryName}")
     public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
         String name = DataFormat.FormatString(categoryName);
-        return productRepository.findProductByCategory(name);
+        List<Product> product = productRepository.findProductByCategory(name);
+        if(product.isEmpty()){
+            return (List<Product>) ResponseEntity.notFound().build();
+        }else{
+
+            return (List<Product>) ResponseEntity.ok(product);
+        }
     }
 
     /* Create product */
     @PostMapping(value = "/products/post")
-    public List<Product> addProduct(@RequestBody Product product){
+    public ResponseEntity<String> addProduct(@RequestBody Product product){
         product.setCreatedAt(CurrentDateTime.getCurrentDateTime());
-        productRepository.insert(product);
-        return getProducts();
+        if (product.getCategoryName().isEmpty()) {
+            return ResponseEntity.ok().body("missing product category");
+        }
+        else{
+            productRepository.insert(product);
+            return ResponseEntity.ok().body("The product is created");
+        }
     }
 
     /* Delete 1 product */
     @DeleteMapping("/products/delete/{productId}")
-    public List<Product> deleteProduct(@PathVariable final ObjectId productId) {
-        productRepository.deleteById(productId);
-        return getProducts();
+    public ResponseEntity<String> deleteProduct(@PathVariable final ObjectId productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if(product.isPresent()){
+            productRepository.deleteById(productId);
+            return ResponseEntity.ok().body("Product deleted");
+        }
+        return ResponseEntity.notFound().build();
     }
 
     /* Update 1 product */
     @PutMapping("/products/put/{productId}")
-    public Optional<Product> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productmaj) {
+    public ResponseEntity<Optional<Product>> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productUpdate) {
         Optional<Product> product = productRepository.findById(productId);
         product.ifPresent(p -> {
-            p.setName(productmaj.getName());
-            p.setColor(productmaj.getColor());
-            p.setSrcImg(productmaj.getSrcImg());
-            p.setStock(productmaj.getStock());
-            p.setStars(productmaj.getStars());
-            p.setWidth(productmaj.getWidth());
-            p.setLength(productmaj.getLength());
-            p.setPrice(productmaj.getPrice());
-            p.setDescription(productmaj.getDescription());
-            p.setDesc1(productmaj.getDesc1());
-            p.setDesc2(productmaj.getDesc2());
+            p.setName(productUpdate.getName());
+            p.setColor(productUpdate.getColor());
+            p.setSrcImg(productUpdate.getSrcImg());
+            p.setStock(productUpdate.getStock());
+            p.setStars(productUpdate.getStars());
+            p.setWidth(productUpdate.getWidth());
+            p.setLength(productUpdate.getLength());
+            p.setPrice(productUpdate.getPrice());
+            p.setDescription(productUpdate.getDescription());
+            p.setDesc1(productUpdate.getDesc1());
+            p.setDesc2(productUpdate.getDesc2());
             p.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
             productRepository.save(p);
         });
-        return getProduct(productId);
+        return ResponseEntity.ok(product);
     }
 }
