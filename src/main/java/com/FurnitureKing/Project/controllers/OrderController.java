@@ -20,10 +20,12 @@ public class OrderController {
 
     public OrderController(OrderRepository orderRepository) {this.orderRepository = orderRepository;}
 
+
     /* Get all orders */
     @GetMapping("/orders")
-    public List<Order> getOrders() {
-        return (List<Order>) ResponseEntity.ok(orderRepository.findAll());
+    public ResponseEntity<List<Order>> getOrders() {
+        List<Order> orderList = orderRepository.findAll();
+        return ResponseEntity.ok(orderList);
     }
 
     /* Search 1 order by Id */
@@ -60,8 +62,8 @@ public class OrderController {
         return ResponseEntity.notFound().build();
     }
 
-    /* Update 1 client */
-    @PutMapping("/clients/put/{clientId}")
+    /* Update 1 order */
+    @PutMapping("/orders/put/{orderId}")
     public ResponseEntity<Optional<Order>> updateProduct(@PathVariable final ObjectId orderId, @RequestBody Order orderUpdate) {
         Optional<Order> order = orderRepository.findById(orderId);
         order.ifPresent(o -> {

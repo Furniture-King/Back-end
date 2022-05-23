@@ -23,8 +23,9 @@ public class ClientController {
 
     /* Get all clients */
     @GetMapping("/clients")
-    public List<Client> getClients() {
-        return (List<Client>) ResponseEntity.ok(clientRepository.findAll());
+    public ResponseEntity<List<Client>> getClients() {
+        List<Client> clientList = clientRepository.findAll();
+        return (ResponseEntity<List<Client>>) ResponseEntity.ok(clientList);
     }
 
 
@@ -50,13 +51,13 @@ public class ClientController {
 
     /* Delete 1 client */
     @DeleteMapping("/clients/delete/{clientId}")
-    public List<Client> deleteClient(@PathVariable final ObjectId clientId) {
+    public ResponseEntity<String> deleteClient(@PathVariable final ObjectId clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
         if(client.isPresent()){
             clientRepository.deleteById(clientId);
-            return (List<Client>) ResponseEntity.ok().body("User deleted");
+            return ResponseEntity.ok().body("User deleted");
         }
-        return (List<Client>) ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
 
     /* Update 1 client */

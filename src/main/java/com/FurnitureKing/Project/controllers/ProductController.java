@@ -1,5 +1,6 @@
 package com.FurnitureKing.Project.controllers;
 
+import com.FurnitureKing.Project.models.Client;
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import com.FurnitureKing.Project.repositories.ProductRepository;
@@ -24,8 +25,9 @@ public class ProductController {
 
     /* Get all products */
     @GetMapping("/products")
-    public List<Product> getProducts() {
-        return (List<Product>) ResponseEntity.ok(productRepository.findAll());
+    public ResponseEntity<List<Product>> getProducts() {
+        List<Product> productList = productRepository.findAll();
+        return ResponseEntity.ok(productList);
     }
 
     /* Search 1 product */
