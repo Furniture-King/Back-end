@@ -1,6 +1,5 @@
 package com.FurnitureKing.Project.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -103,8 +101,16 @@ public class Client {
         this.updatedAt = updatedAt;
     }
 
-    public Client(String email, String passwordSalt) {
+    public Client(String firstName, String email, String passwordHash, String passwordSalt) {
+        this.firstName = firstName;
         this.email = email;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
+    }
+
+    public Client(String email, String passwordHash, String passwordSalt) {
+        this.email = email;
+        this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
     }
 
