@@ -78,23 +78,21 @@ import java.util.stream.Collectors;
         JwtUtils jwtUtils;
         @PostMapping("/sign-in")
         public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-            System.out.println(loginRequest.getEmail() + " " + loginRequest.getPasswordHash());
-            System.out.println("apres ça ca bug ?");
+            System.out.println(loginRequest.getEmail() + " " + loginRequest.getPassword());
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPasswordHash()));
-            System.out.println("apres ça ca bug ?");
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), Password.Check(loginRequest.getPassword())));
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println("apres ça ca bug ?");
             String jwt = jwtUtils.generateJwtToken(authentication);
-            System.out.println("apres ça ca bug ?");
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
                     .collect(Collectors.toList());
+
             return ResponseEntity.ok(new JwtResponse(jwt,
                     userDetails.getId(),
-                    userDetails.getEmail(),
                     userDetails.getUsername(),
+                    userDetails.getEmail(),
                     roles));
         }
         @PostMapping("/sign-up")
