@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -79,8 +80,14 @@ import java.util.stream.Collectors;
         @PostMapping("/sign-in")
         public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
             System.out.println(loginRequest.getEmail() + " " + loginRequest.getPassword());
+            Optional<Client> client = clientRepository.findByEmail(loginRequest.getEmail());
+            final Boolean[] bool = {false};
+            client.ifPresent(c -> {
+                c.setNbConnection(c.getNbConnection() + 1);
+                bool[0] = Password.Check(c.getPasswordHash(), c.getPasswordSalt());
+            });
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), Password.Check(loginRequest.getPassword())));
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), bool[0]));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
