@@ -12,7 +12,6 @@ import com.FurnitureKing.Project.repositories.RoleRepository;
 import com.FurnitureKing.Project.security.jwt.JwtUtils;
 import com.FurnitureKing.Project.security.services.UserDetailsImpl;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
-import com.FurnitureKing.Project.utils.Password;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,44 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//@RestController
-//public class AuthController {
-//
-//private final ClientRepository clientRepository;
-//
-//@Autowired
-//public AuthController(ClientRepository clientRepository) {
-//    this.clientRepository = clientRepository;
-//}
-//
-//
-///* Sign-up */
-//@PostMapping(value = "/clients/sign-up")
-//public ResponseEntity<Client> addClient(@RequestBody Client client){
-//    client.setCreatedAt(CurrentDateTime.getCurrentDateTime());
-//    client.setNbConnection(1);
-//    String[] hshPsw = Password.Hash(client.getPasswordHash());
-//    client.setPasswordHash(hshPsw[0]);
-//    client.setPasswordSalt(hshPsw[1]);
-//    clientRepository.insert(client);
-//    return ResponseEntity.ok().body(client);
-//}
-//
-///* Sign-in check */
-//@PostMapping(value = "/clients/sign-in")
-//public Optional<Client> checkClient(@RequestBody Client data){
-//    Optional<Client> client = clientRepository.findByEmail(data.getEmail());
-//    final Boolean[] bool = {false};
-//    client.ifPresent(c -> {
-//        c.setNbConnection(c.getNbConnection() + 1);
-//        bool[0] = Password.Check(data.getPasswordHash(), c.getPasswordSalt());
-//    });
-//    return client;
-//}
     @CrossOrigin(origins = "*", maxAge = 3600)
     @RestController
     @RequestMapping("/api/auth")
@@ -77,20 +41,15 @@ import java.util.stream.Collectors;
         PasswordEncoder encoder;
         @Autowired
         JwtUtils jwtUtils;
+
         @PostMapping("/sign-in")
         public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-            System.out.println(loginRequest.getEmail() + " " + loginRequest.getPassword());
-            Optional<Client> client = clientRepository.findByEmail(loginRequest.getEmail());
-            final Boolean[] bool = {false};
-            client.ifPresent(c -> {
-                c.setNbConnection(c.getNbConnection() + 1);
-                bool[0] = Password.Check(c.getPasswordHash(), c.getPasswordSalt());
-            });
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), bool[0]));
 
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
+
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
@@ -102,24 +61,33 @@ import java.util.stream.Collectors;
                     userDetails.getEmail(),
                     roles));
         }
+
         @PostMapping("/sign-up")
         public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-            //System.out.println(signUpRequest.getEmail() + " " + signUpRequest.getFirstName() + " " + signUpRequest.getPassword() + " " + signUpRequest.getRoles() );
+            System.out.println(signUpRequest.getEmail() + " " +  signUpRequest.getPassword()+ " " + signUpRequest.getRoles());
             if (clientRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
                 return ResponseEntity
                         .badRequest()
-                        .body(new MessageResponse("Error: Username is already taken!"));
+                        .body(new MessageResponse("Error: Email is already in use!"));
             }
 
-            // Create new client account
-            String[] hshPsw = Password.Hash(signUpRequest.getPassword());
+            // Create new user's account
             Client client = new Client(
                     signUpRequest.getEmail(),
-                    hshPsw[0],
-                    hshPsw[1]
-                    );
+                    encoder.encode(signUpRequest.getPassword()),
+                    signUpRequest.getCivility(),
+                    signUpRequest.getLastName(),
+                    signUpRequest.getFirstName(),
+                    signUpRequest.getAddress(),
+                    signUpRequest.getPostalCode(),
+                    signUpRequest.getCity(),
+                    signUpRequest.getPhone(),
+                    signUpRequest.getNbConnection(),
+                    signUpRequest.getFavProduct()
+            );
             Set<String> strRoles = signUpRequest.getRoles();
             Set<Role> roles = new HashSet<>();
+
             if (strRoles == null) {
                 Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -139,10 +107,11 @@ import java.util.stream.Collectors;
                     }
                 });
             }
-            client.setRoles(roles);
             client.setCreatedAt(CurrentDateTime.getCurrentDateTime());
             client.setNbConnection(1);
+            client.setRoles(roles);
             clientRepository.save(client);
+
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         }
 }

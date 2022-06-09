@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,19 +24,27 @@ public class Client {
     private Set<Role> roles = new HashSet<>();
 
     @NotBlank
+    @Size(max = 50)
     @Email
     @Indexed(unique = true)
+    @Field
     private String email;
 
     @NotBlank
     @Field
     private String passwordHash;
 
+    @NotBlank
+    @Size(max = 120)
     @Field
     private String passwordSalt;
 
     @Field
     private Integer civility;
+
+    @NotBlank
+    @Size(max = 20)
+    private String username;
 
     @Field
     private String lastName;
@@ -101,17 +110,31 @@ public class Client {
         this.updatedAt = updatedAt;
     }
 
-    public Client(String firstName, String email, String passwordHash, String passwordSalt) {
-        this.firstName = firstName;
+    public Client(String email,String username, String passwordHash) {
         this.email = email;
+        this.username = username;
+        this.passwordHash = passwordHash;
+    }
+
+    public Client(String email,String username, String passwordHash, String passwordSalt) {
+        this.email = email;
+        this.username = username;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
     }
 
-    public Client(String email, String passwordHash, String passwordSalt) {
+    public Client(String email, String password, Integer civility, String lastName, String firstName, String address, String postalCode, String city, String phone, Integer nbConnection, List<String> favProduct) {
         this.email = email;
-        this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
+        this.passwordHash = password;
+        this.civility = civility;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.phone = phone;
+        this.nbConnection = nbConnection;
+        this.favProduct = favProduct;
     }
 
     public ObjectId getId() {return id;}
@@ -131,6 +154,9 @@ public class Client {
 
     public Integer getCivility() {return civility;}
     public void setCivility(Integer civility) {this.civility = civility;}
+
+    public String getUsername() {return username;}
+    public void setUsername(String username) { this.username = username;}
 
     public String getLastName() {return lastName;}
     public void setLastName(String lastName) {this.lastName = lastName;}
