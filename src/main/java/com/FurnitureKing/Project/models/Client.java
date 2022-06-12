@@ -110,19 +110,6 @@ public class Client {
         this.updatedAt = updatedAt;
     }
 
-    public Client(String email,String username, String passwordHash) {
-        this.email = email;
-        this.username = username;
-        this.passwordHash = passwordHash;
-    }
-
-    public Client(String email,String username, String passwordHash, String passwordSalt) {
-        this.email = email;
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
-    }
-
     public Client(String email, String password, Integer civility, String lastName, String firstName, String address, String postalCode, String city, String phone, Integer nbConnection, List<String> favProduct) {
         this.email = email;
         this.passwordHash = password;

@@ -41,7 +41,7 @@ public class ClientController {
 
     /* Search 1 client by email */
     @GetMapping("/clients/{email}")
-    public ResponseEntity<Optional<Client>> getClient(@PathVariable final String email) {
+    public ResponseEntity<Optional<Client>> getClientByEmail(@PathVariable final String email) {
         Optional<Client> client = clientRepository.findByEmail(email);
         if(client.isPresent()){
             return ResponseEntity.ok(client);
@@ -62,7 +62,7 @@ public class ClientController {
 
     /* Update 1 client */
     @PutMapping("/clients/put/{clientId}")
-    public ResponseEntity<Optional<Client>> updateProduct(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
+    public ResponseEntity<Optional<Client>> updateClient(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
         client.ifPresent(c -> {
             c.setRoles(clientUpdate.getRoles());

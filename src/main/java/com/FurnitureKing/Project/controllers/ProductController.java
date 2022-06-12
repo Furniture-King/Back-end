@@ -1,6 +1,6 @@
 package com.FurnitureKing.Project.controllers;
 
-import com.FurnitureKing.Project.models.Client;
+import com.FurnitureKing.Project.filters.ProductFilter;
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import com.FurnitureKing.Project.repositories.ProductRepository;
@@ -8,10 +8,13 @@ import com.FurnitureKing.Project.utils.DataFormat;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProductController {
@@ -41,16 +44,30 @@ public class ProductController {
     }
 
     /* Get all products from 1 category*/
-    @GetMapping("/products/{categoryName}")
+    @GetMapping("/products/category/{categoryName}")
     public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
         String name = DataFormat.FormatString(categoryName);
-        List<Product> product = productRepository.findProductByCategory(name);
+        List<Product> product = productRepository.findProductsByCategory(name);
         if(product.isEmpty()){
             return (List<Product>) ResponseEntity.notFound().build();
         }else{
-
             return (List<Product>) ResponseEntity.ok(product);
         }
+    }
+
+    /* Get all products from filters */
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/products/filter")
+    public List<Product> getCategoryProducts(@RequestBody final ProductFilter productfilter) {
+        System.out.println("C'est bon");
+        List<Product> productList = productRepository.findAll();
+        if(!productfilter.getCategoryName().isEmpty()){
+            productList = productList.stream().filter(product -> Objects.equals(product.getCategoryName(), productfilter.getCategoryName())).collect(Collectors.<Product>toList());
+        }
+        if(!productfilter.getColor().isEmpty()){
+            productList = productList.stream().filter(product -> Objects.equals(product.getColor(), productfilter.getColor())).collect(Collectors.<Product>toList());
+        }
+            return (List<Product>) ResponseEntity.ok(productList);
     }
 
     /* Create product */
@@ -61,6 +78,8 @@ public class ProductController {
             return ResponseEntity.ok().body("missing product category");
         }
         else{
+            product.setCategoryName(DataFormat.FormatString(product.getCategoryName()));
+            product.setColor(DataFormat.FormatString(product.getColor()));
             productRepository.insert(product);
             return ResponseEntity.ok().body("The product is created");
         }
