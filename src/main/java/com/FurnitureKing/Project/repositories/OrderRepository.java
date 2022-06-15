@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface OrderRepository extends MongoRepository<Order, String> {
+public interface OrderRepository
+        extends MongoRepository<Order, String> {
     Optional<Order> findById(ObjectId orderId);
 
     void deleteById(ObjectId orderId);

@@ -59,14 +59,19 @@ public class ProductController {
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/products/filter")
     public List<Product> getCategoryProducts(@RequestBody final ProductFilter productfilter) {
-        System.out.println("C'est bon");
+        System.out.println("Dans la requête des filtres");
+        System.out.println("object received : " + productfilter.getCategoryName() + " " + productfilter.getColor() );
         List<Product> productList = productRepository.findAll();
         if(!productfilter.getCategoryName().isEmpty()){
+            System.out.println("filtre canape");
+            System.out.println("la requete en bas fonctionne pas");
             productList = productList.stream().filter(product -> Objects.equals(product.getCategoryName(), productfilter.getCategoryName())).collect(Collectors.<Product>toList());
         }
         if(!productfilter.getColor().isEmpty()){
+            System.out.println("filtre color");
             productList = productList.stream().filter(product -> Objects.equals(product.getColor(), productfilter.getColor())).collect(Collectors.<Product>toList());
         }
+        System.out.println("resultat du filtre " + productList);
             return (List<Product>) ResponseEntity.ok(productList);
     }
 

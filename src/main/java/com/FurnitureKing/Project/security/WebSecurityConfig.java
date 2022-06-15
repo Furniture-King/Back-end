@@ -39,13 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        System.out.println("authenticationManagerBean");
         return super.authenticationManagerBean();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        System.out.println("passwordEncoder");
         return new BCryptPasswordEncoder();
     }
 

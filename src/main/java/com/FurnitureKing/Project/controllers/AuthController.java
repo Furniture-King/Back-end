@@ -49,7 +49,6 @@ import java.util.stream.Collectors;
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
-
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
@@ -64,7 +63,6 @@ import java.util.stream.Collectors;
 
         @PostMapping("/sign-up")
         public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-            System.out.println(signUpRequest.getEmail() + " " +  signUpRequest.getPassword()+ " " + signUpRequest.getRoles());
             if (clientRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
                 return ResponseEntity
                         .badRequest()

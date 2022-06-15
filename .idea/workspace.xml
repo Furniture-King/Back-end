@@ -5,15 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8bbe05d3-18c8-4860-a902-b36ae186835d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/filters/ProductFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/BankCardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/BasketController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/BankCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Basket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/BankCardRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/BasketRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/CommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/security/jwt/JwtUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/security/jwt/JwtUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/security/services/UserDetailsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/security/services/UserDetailsImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +29,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -125,7 +130,10 @@
       <workItem from="1654688354848" duration="1197000" />
       <workItem from="1654760736536" duration="15922000" />
       <workItem from="1654954122920" duration="3447000" />
-      <workItem from="1655027852556" duration="21442000" />
+      <workItem from="1655027852556" duration="21462000" />
+      <workItem from="1655148413239" duration="8025000" />
+      <workItem from="1655228926518" duration="3872000" />
+      <workItem from="1655316304037" duration="6301000" />
     </task>
     <servers />
   </component>
