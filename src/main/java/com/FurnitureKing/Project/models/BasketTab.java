@@ -6,12 +6,7 @@ public class BasketTab {
 
     private ObjectId productId;
 
-    private String productName;
-
     private Integer qté;
-
-    public String getProductName() {return productName;}
-    public void setProductName(String productName) {this.productName = productName;}
 
     public ObjectId getProductId() {return productId;}
     public void setProductId(ObjectId productId) {this.productId = productId;}

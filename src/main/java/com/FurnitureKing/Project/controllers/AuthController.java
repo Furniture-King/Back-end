@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
         public AuthController(BasketRepository basketRepository) {this.basketRepository = basketRepository;}
 
         @PostMapping("/sign-in")
-        public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));

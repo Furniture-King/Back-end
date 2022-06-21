@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 public class BasketController {
@@ -76,36 +77,25 @@ public class BasketController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/baskets/put/client/{clientId}")
     public ResponseEntity<String> updateBasket(@PathVariable final ObjectId clientId, @RequestBody BasketTab basketTab) {
-        System.out.println("dans la requete");
-        Optional<Basket> basket = basketRepository.getBasketByClient_Id(clientId);
-        System.out.println(basket.get().getClient().getFirstName());
-
-        List<BasketTab> bddBasket = basket.get().getBasketTab();
-
-        if(basket.get().getBasketTab() == null){
-            List<BasketTab> newBasketTab = new ArrayList<BasketTab>();
-            newBasketTab.add(basketTab);
-            basket.get().setBasketTab(newBasketTab);
+        Optional<Basket> bddBasket = basketRepository.getBasketByClient_Id(clientId);
+        List<BasketTab> bddBasketTab = bddBasket.get().getBasketTab();
+        if (bddBasketTab == null) {
+           List<BasketTab> newBasketTab = new ArrayList<BasketTab>();
+           newBasketTab.add(basketTab);
+           bddBasket.get().setBasketTab(newBasketTab);
         }else{
-            Boolean flag = false;
-            //voir si foreach fonctionne
-            if (!bddBasket.stream().anyMatch(bt -> bt.getProductId() == basketTab.getProductId())) {
-                basket.get().getBasketTab().add(basketTab);
-            } else {
-                List<BasketTab> listeBasket = new ArrayList<BasketTab>();
-                basket.get().getBasketTab().forEach(bt -> {
-                    if (bt.getProductId() == basketTab.getProductId()) {
-                        bt.setQté(bt.getQté() + basketTab.getQté());
-                    }
-                    listeBasket.add(bt);
-                });
-                basket.get().setBasketTab(listeBasket);
-            }
+            final Boolean[] Present = {false};
+           bddBasketTab.forEach(bT ->{
+                   if(bT.getProductId().toString().equals(basketTab.getProductId().toString())){
+                       Present[0] = true;
+                       bT.setQté(bT.getQté() + basketTab.getQté());
+                   }
+           });
+           if(!Present[0]){
+               bddBasket.get().getBasketTab().add(basketTab);
+           }
         }
-
-
-        basket.ifPresent(basketRepository::save);
+        bddBasket.ifPresent(basketRepository::save);
         return ResponseEntity.ok("ok");
     }
-
 }
