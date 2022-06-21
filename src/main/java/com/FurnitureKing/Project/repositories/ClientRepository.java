@@ -14,6 +14,8 @@ public interface ClientRepository
     Optional<Client> findByUsername(String username);
 
     Boolean existsByUsername(String username);
+
     Optional<Client> findByEmail(String email);
+
     Optional<Client> findById(ObjectId clientId);
 }

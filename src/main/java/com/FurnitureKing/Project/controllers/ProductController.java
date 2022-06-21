@@ -7,6 +7,8 @@ import com.FurnitureKing.Project.repositories.ProductRepository;
 import com.FurnitureKing.Project.utils.DataFormat;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +29,23 @@ public class ProductController {
     }
 
     /* Get all products */
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts() {
         List<Product> productList = productRepository.findAll();
         return ResponseEntity.ok(productList);
     }
 
+    /* Get products by popularity */
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/products/popular")
+    public ResponseEntity<List<Product>> getPopularProducts() {
+        List<Product> productList = (productRepository.findAll(Sort.by(Sort.Direction.DESC,"stars")));
+        return ResponseEntity.ok(productList);
+    }
+
     /* Search 1 product */
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products/id/{productId}")
     public ResponseEntity<Optional<Product>> getProduct(@PathVariable final ObjectId productId) {
         Optional<Product> product = productRepository.findById(productId);
@@ -43,7 +55,8 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
-    /* Get all products from 1 category*/
+    /* Get all products by 1 category*/
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products/category/{categoryName}")
     public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
         String name = DataFormat.FormatString(categoryName);
@@ -56,26 +69,32 @@ public class ProductController {
     }
 
     /* Get all products from filters */
-    @PreAuthorize("hasRole('USER')")
-    @PostMapping("/products/filter")
-    public List<Product> getCategoryProducts(@RequestBody final ProductFilter productfilter) {
-        System.out.println("Dans la requête des filtres");
-        System.out.println("object received : " + productfilter.getCategoryName() + " " + productfilter.getColor() );
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/products/filter")
+    public ResponseEntity<List<Product>> getCategoryProducts(@RequestBody final ProductFilter productfilter) {
+
         List<Product> productList = productRepository.findAll();
-        if(!productfilter.getCategoryName().isEmpty()){
-            System.out.println("filtre canape");
-            System.out.println("la requete en bas fonctionne pas");
+
+        if(productfilter.getCategoryName() != null){
             productList = productList.stream().filter(product -> Objects.equals(product.getCategoryName(), productfilter.getCategoryName())).collect(Collectors.<Product>toList());
         }
-        if(!productfilter.getColor().isEmpty()){
-            System.out.println("filtre color");
+        if(productfilter.getColor() != null){
             productList = productList.stream().filter(product -> Objects.equals(product.getColor(), productfilter.getColor())).collect(Collectors.<Product>toList());
         }
-        System.out.println("resultat du filtre " + productList);
-            return (List<Product>) ResponseEntity.ok(productList);
+        if(productfilter.getfirstPrice() != null && productfilter.getsecondPrice() != null){
+            productList = productList.stream().filter(product -> product.getPrice() > productfilter.getfirstPrice() && product.getPrice() < productfilter.getsecondPrice() ).collect(Collectors.<Product>toList());
+        }
+       if(productfilter.getStars() != null){
+           productList = productList.stream().filter(product -> Objects.equals(product.getStars(), productfilter.getStars())).collect(Collectors.<Product>toList());
+       }
+        if(productfilter.getStock() != null){
+            productList = productList.stream().filter(product -> Objects.equals(product.getStock(), productfilter.getStock())).collect(Collectors.<Product>toList());
+        }
+            return ResponseEntity.ok(productList);
     }
 
     /* Create product */
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/products/post")
     public ResponseEntity<String> addProduct(@RequestBody Product product){
         product.setCreatedAt(CurrentDateTime.getCurrentDateTime());
@@ -91,6 +110,7 @@ public class ProductController {
     }
 
     /* Delete 1 product */
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/products/delete/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable final ObjectId productId) {
         Optional<Product> product = productRepository.findById(productId);
@@ -102,6 +122,7 @@ public class ProductController {
     }
 
     /* Update 1 product */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/products/put/{productId}")
     public ResponseEntity<Optional<Product>> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productUpdate) {
         Optional<Product> product = productRepository.findById(productId);

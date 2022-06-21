@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Document(collection = "comments")
 public class Comment {
@@ -15,14 +16,14 @@ public class Comment {
     private ObjectId id;
 
     @DBRef
-    private Client client;
+    private Set<Client> client;
 
     @DBRef
-    private Product product;
+    private Set<Product> product;
 
     @NotBlank
     @Field
-    private String note;
+    private Integer note;
 
     @NotBlank
     @Size(max = 120)
@@ -35,33 +36,33 @@ public class Comment {
     @Field
     private long updatedAt;
 
-    public Comment(ObjectId id, Client client, Product product, String note, String comment, long createdAt, long updatedAt) {
-        this.id = id;
+    public Comment() {}
+
+    public Comment(Set<Client> client, Set<Product> product, Integer note, String comment) {
         this.client = client;
         this.product = product;
         this.note = note;
         this.comment = comment;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public Comment(Client client, Product product, String note, String comment, long createdAt, long updatedAt) {
+    public Set<Client> getClient() {
+        return client;
+    }
+
+    public void setClient(Set<Client> client) {
         this.client = client;
-        this.product = product;
-        this.note = note;
-        this.comment = comment;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    public Client getClient() {return client;}
-    public void setClient(Client client) {this.client = client;}
+    public Set<Product> getProduct() {
+        return product;
+    }
 
-    public Product getProduct() {return product;}
-    public void setProduct(Product product) {this.product = product;}
+    public void setProduct(Set<Product> product) {
+        this.product = product;
+    }
 
-    public String getNote() {return note;}
-    public void setNote(String note) {this.note = note;}
+    public Integer getNote() {return note;}
+    public void setNote(Integer note) {this.note = note;}
 
     public String getComment() {return comment;}
     public void setComment(String comment) {this.comment = comment;}

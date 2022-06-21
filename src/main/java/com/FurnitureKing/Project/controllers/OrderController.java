@@ -8,6 +8,7 @@ import com.FurnitureKing.Project.repositories.OrderRepository;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class OrderController {
 
 
     /* Get all orders */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/orders")
     public ResponseEntity<List<Order>> getOrders() {
         List<Order> orderList = orderRepository.findAll();
@@ -29,6 +31,7 @@ public class OrderController {
     }
 
     /* Search 1 order by Id */
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/orders/id/{orderId}")
     public ResponseEntity<Optional<Order>> getOrder(@PathVariable final ObjectId orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
@@ -39,6 +42,7 @@ public class OrderController {
     }
 
     /* Create order */
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/orders/post")
     public ResponseEntity<String> addOrder(@RequestBody Order order){
         order.setCreatedAt(CurrentDateTime.getCurrentDateTime());
@@ -52,6 +56,7 @@ public class OrderController {
     }
 
     /* Delete 1 order */
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/orders/delete/{orderId}")
     public ResponseEntity<String> deleteOrder(@PathVariable final ObjectId orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
@@ -63,6 +68,7 @@ public class OrderController {
     }
 
     /* Update 1 order */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/orders/put/{orderId}")
     public ResponseEntity<Optional<Order>> updateProduct(@PathVariable final ObjectId orderId, @RequestBody Order orderUpdate) {
         Optional<Order> order = orderRepository.findById(orderId);

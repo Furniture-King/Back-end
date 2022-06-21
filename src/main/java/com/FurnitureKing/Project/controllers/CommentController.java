@@ -6,6 +6,7 @@ import com.FurnitureKing.Project.repositories.CommentRepository;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,37 +22,41 @@ public class CommentController {
     }
 
     /* Get all comments */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/comments")
     public ResponseEntity<List<Comment>> getComments() {
         List<Comment> commentList = commentRepository.findAll();
         return ResponseEntity.ok(commentList);
     }
 
-    /* Get all comments from 1 client*/
-    @GetMapping("/comments/client/{clientId}")
-    public List<Comment> getClientComments(@PathVariable final ObjectId clientId) {
-        List<Comment> comments = commentRepository.findCommentByClientAndId(clientId);
-        if(comments.isEmpty()){
-            return (List<Comment>) ResponseEntity.notFound().build();
-        }else{
-
-            return (List<Comment>) ResponseEntity.ok(comments);
-        }
-    }
-
-    /* Get all comments from 1 product*/
-    @GetMapping("/comments/product/{productId}")
-    public List<Comment> getProductComments(@PathVariable final ObjectId productId) {
-        List<Comment> comments = commentRepository.findCommentByProductAndId(productId);
-        if(comments.isEmpty()){
-            return (List<Comment>) ResponseEntity.notFound().build();
-        }else{
-
-            return (List<Comment>) ResponseEntity.ok(comments);
-        }
-    }
+   // /* Get all comments from 1 client*/
+   // @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+   // @GetMapping("/comments/client/{clientId}")
+   // public List<Comment> getClientComments(@PathVariable final ObjectId clientId) {
+   //     List<Comment> comments = commentRepository.findCommentByClientAndId(clientId);
+   //     if(comments.isEmpty()){
+   //         return (List<Comment>) ResponseEntity.notFound().build();
+   //     }else{
+    //
+   //         return (List<Comment>) ResponseEntity.ok(comments);
+   //     }
+   // }
+    //
+   // /* Get all comments from 1 product*/
+   // @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+   // @GetMapping("/comments/product/{productId}")
+   // public List<Comment> getProductComments(@PathVariable final ObjectId productId) {
+   //     List<Comment> comments = commentRepository.findCommentsByProductAndIdEquals(productId);
+   //     if(comments.isEmpty()){
+   //         return (List<Comment>) ResponseEntity.notFound().build();
+   //     }else{
+    //
+   //         return (List<Comment>) ResponseEntity.ok(comments);
+   //     }
+   // }
 
     /* Create comment */
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/comments/post")
     public ResponseEntity<String> addComment(@RequestBody Comment comment){
         comment.setCreatedAt(CurrentDateTime.getCurrentDateTime());
@@ -60,8 +65,9 @@ public class CommentController {
     }
 
     /* Delete 1 comments */
-    @DeleteMapping("/comments/delete/{commentsId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable final ObjectId commentId) {
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @DeleteMapping("/comments/delete/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable final ObjectId commentId) {
         Optional<Comment> comment = commentRepository.findById(commentId);
         if(comment.isPresent()){
             commentRepository.deleteById(commentId);
@@ -71,8 +77,9 @@ public class CommentController {
     }
 
     /* Update 1 product */
-    @PutMapping("/comments/put/{commentsId}")
-    public ResponseEntity<Optional<Comment>> updateProduct(@PathVariable final ObjectId commentId, @RequestBody Comment commentUpdate) {
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PutMapping("/comments/put/{commentId}")
+    public ResponseEntity<Optional<Comment>> updateComment(@PathVariable final ObjectId commentId, @RequestBody Comment commentUpdate) {
         Optional<Comment> comment = commentRepository.findById(commentId);
         comment.ifPresent(c -> {
             c.setNote(commentUpdate.getNote());

@@ -12,7 +12,10 @@ public class ProductFilter {
     @Field
     private Float stars;
     @Field
-    private Double price;
+    private Integer firstPrice;
+    @Field
+    private Integer secondPrice;
+
 
     public String getCategoryName() {return categoryName;}
 
@@ -22,5 +25,7 @@ public class ProductFilter {
 
     public Float getStars() {return stars;}
 
-    public Double getPrice() {return price;}
+    public Integer getfirstPrice() {return firstPrice;}
+
+    public Integer getsecondPrice() {return secondPrice;}
 }

@@ -2,16 +2,14 @@ package com.FurnitureKing.Project.models;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Optional;
 
-@Document(collection = "Basket")
+@Document(collection = "basket")
 public class Basket {
     @Id
     private ObjectId id;
@@ -20,7 +18,7 @@ public class Basket {
     private Client client;
 
     @Field
-    private List<String> products;
+    private List<BasketTab> basketTab;
 
     @Field
     private long createdAt;
@@ -30,18 +28,21 @@ public class Basket {
 
     public Basket(){}
 
-    public Basket(Client client, List<String> products, long createdAt, long updatedAt) {
+    public Basket(Client client, List<BasketTab> basketTab) {
         this.client = client;
-        this.products = products;
+        this.basketTab = basketTab;
+    }
+
+    public Basket(Client client, long createdAt) {
+        this.client = client;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Client getClient() {return client;}
     public void setClient(Client client) {this.client = client;}
 
-    public List<String> getProducts() {return products;}
-    public void setProducts(List<String> products) {this.products = products;}
+    public List<BasketTab> getBasketTab() {return basketTab;}
+    public void setBasketTab(List<BasketTab> basketTab) {this.basketTab = basketTab;}
 
     public long getCreatedAt() {return createdAt;}
     public void setCreatedAt(long createdAt) {this.createdAt = createdAt;}

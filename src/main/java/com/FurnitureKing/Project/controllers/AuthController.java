@@ -1,12 +1,14 @@
 package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Client;
+import com.FurnitureKing.Project.models.Basket;
 import com.FurnitureKing.Project.models.ERole;
 import com.FurnitureKing.Project.models.Role;
 import com.FurnitureKing.Project.payload.request.LoginRequest;
 import com.FurnitureKing.Project.payload.request.SignupRequest;
 import com.FurnitureKing.Project.payload.response.JwtResponse;
 import com.FurnitureKing.Project.payload.response.MessageResponse;
+import com.FurnitureKing.Project.repositories.BasketRepository;
 import com.FurnitureKing.Project.repositories.ClientRepository;
 import com.FurnitureKing.Project.repositories.RoleRepository;
 import com.FurnitureKing.Project.security.jwt.JwtUtils;
@@ -41,6 +43,10 @@ import java.util.stream.Collectors;
         PasswordEncoder encoder;
         @Autowired
         JwtUtils jwtUtils;
+
+        private final BasketRepository basketRepository;
+
+        public AuthController(BasketRepository basketRepository) {this.basketRepository = basketRepository;}
 
         @PostMapping("/sign-in")
         public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -100,7 +106,7 @@ import java.util.stream.Collectors;
                             break;
                         default:
                             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                    .orElseThrow(() -> new RuntimeException("Error: Role " + role + " is not found."));
                             roles.add(userRole);
                     }
                 });
@@ -109,7 +115,8 @@ import java.util.stream.Collectors;
             client.setNbConnection(1);
             client.setRoles(roles);
             clientRepository.save(client);
-
+            Basket basket = new Basket(client,CurrentDateTime.getCurrentDateTime());
+            basketRepository.insert(basket);
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         }
 }

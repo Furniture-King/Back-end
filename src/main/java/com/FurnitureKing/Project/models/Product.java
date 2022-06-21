@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
+import java.util.List;
 
 @Document(collection = "product")
 public class Product {
@@ -18,7 +18,7 @@ public class Product {
     @Field
     private String color;
     @Field
-    private String srcImg;
+    private List<String> srcImg;
     @Field
     private Integer stock;
     @Field
@@ -47,7 +47,7 @@ public class Product {
             String categoryName,
             String name,
             String color,
-            String srcImg,
+            List<String> srcImg,
             Integer stock,
             Float stars,
             Float width,
@@ -80,7 +80,7 @@ public class Product {
             String categoryName,
             String name,
             String color,
-            String srcImg,
+            List<String> srcImg,
             Integer stock,
             Float stars,
             Float width,
@@ -139,9 +139,9 @@ public class Product {
         this.color = color;
     }
 
-    public String getSrcImg(){return srcImg;}
+    public List<String> getSrcImg(){return srcImg;}
 
-    public void setSrcImg(String srcImg){this.srcImg = srcImg;}
+    public void setSrcImg(List<String> srcImg){this.srcImg = srcImg;}
 
     public Integer getStock() {
         return stock;

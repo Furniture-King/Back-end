@@ -19,7 +19,6 @@ public class Role {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -27,7 +26,6 @@ public class Role {
     public ERole getName() {
         return name;
     }
-
     public void setName(ERole name) {
         this.name = name;
     }
