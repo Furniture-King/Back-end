@@ -46,7 +46,7 @@ public class OrderController {
     @PostMapping(value = "/orders/post")
     public ResponseEntity<String> addOrder(@RequestBody Order order){
         order.setCreatedAt(CurrentDateTime.getCurrentDateTime());
-        if(order.getProducts().isEmpty()){
+        if(order.getBasketTabs().isEmpty()){
             return ResponseEntity.badRequest().body("No product in this order");
         }else{
             orderRepository.insert(order);

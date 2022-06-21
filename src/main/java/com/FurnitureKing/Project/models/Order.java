@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
 import java.util.Set;
 
 public class Order {
@@ -12,10 +13,12 @@ public class Order {
     private ObjectId id;
     @Field
     private String number;
+    @Field
+    private String state;
     @DBRef
     private Client client;
     @DBRef
-    private Set<Product> products;
+    private List<BasketTab> basketTabs;
     @Field
     private String address;
     @Field
@@ -34,8 +37,8 @@ public class Order {
     public Client getClient() {return client;}
     public void setClient(Client client) {this.client = client;}
 
-    public Set<Product> getProducts() {return products;}
-    public void setProducts(Set<Product> products) {this.products = products;}
+    public List<BasketTab> getBasketTabs() {return basketTabs;}
+    public void setBasketTabs(List<BasketTab> basketTabs) {this.basketTabs = basketTabs;}
 
     public ObjectId getId() {return id;}
     public void setId(ObjectId id) {this.id = id;}
