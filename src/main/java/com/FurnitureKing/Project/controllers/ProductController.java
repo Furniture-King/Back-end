@@ -29,7 +29,6 @@ public class ProductController {
     }
 
     /* Get all products */
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts() {
         List<Product> productList = productRepository.findAll();
