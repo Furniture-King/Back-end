@@ -2,6 +2,7 @@ package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.filters.ProductFilter;
 import com.FurnitureKing.Project.models.Product;
+import com.FurnitureKing.Project.payload.response.MessageResponse;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import com.FurnitureKing.Project.repositories.ProductRepository;
 import com.FurnitureKing.Project.utils.DataFormat;
@@ -44,12 +45,12 @@ public class ProductController {
 
     /* Search 1 product */
     @GetMapping("/products/id/{productId}")
-    public ResponseEntity<Optional<Product>> getProduct(@PathVariable final ObjectId productId) {
+    public ResponseEntity<?> getProduct(@PathVariable final ObjectId productId) {
         Optional<Product> product = productRepository.findById(productId);
-        if(product.isPresent()){
-            return ResponseEntity.ok(product);
+        if(!product.isPresent()){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: product doesn't exist!"));
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(product);
     }
 
     /* Get all products by 1 category*/

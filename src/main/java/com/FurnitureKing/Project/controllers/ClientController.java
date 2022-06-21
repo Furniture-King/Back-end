@@ -1,10 +1,9 @@
 package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Client;
+import com.FurnitureKing.Project.payload.response.MessageResponse;
 import com.FurnitureKing.Project.repositories.ClientRepository;
-import com.FurnitureKing.Project.security.jwt.AuthTokenFilter;
 import com.FurnitureKing.Project.security.jwt.JwtUtils;
-import com.FurnitureKing.Project.security.services.UserDetailsImpl;
 import com.FurnitureKing.Project.security.services.UserDetailsServiceImpl;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import org.bson.types.ObjectId;
@@ -41,47 +40,50 @@ public class ClientController {
         return ResponseEntity.ok(clientList);
     }
 
-
     /* Search 1 client by Id */
     @GetMapping("/clients/id/{clientId}")
-    public ResponseEntity<Optional<Client>> getClient(@PathVariable final ObjectId clientId) {
+    public ResponseEntity<?> getClient(@PathVariable final ObjectId clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
-        if(client.isPresent()){
-            return ResponseEntity.ok(client);
+        if(!client.isPresent()){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(client);
     }
 
     /* Search 1 client by email */
     @GetMapping("/clients/email/{email}")
-    public ResponseEntity<Optional<Client>> getClientByEmail(@PathVariable final String email) {
+    public ResponseEntity<?> getClientByEmail(@PathVariable final String email) {
         Optional<Client> client = clientRepository.findByEmail(email);
-        if(client.isPresent()){
-            return ResponseEntity.ok(client);
+        if(!client.isPresent()){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: email doesn't exist!"));
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(client);
     }
 
     /* Delete 1 client */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/clients/delete/{clientId}")
-    public ResponseEntity<String> deleteClient(@PathVariable final ObjectId clientId , HttpServletRequest request) {
+    public ResponseEntity<?> deleteClient(@PathVariable final ObjectId clientId , HttpServletRequest request) {
 
         Optional<Client> client = clientRepository.findById(clientId);
         System.out.println("ici " + jwtUtils.getEmailFromJwtToken(request.getHeader("Authorization")));
 
-        if(client.isPresent()){
-                clientRepository.deleteById(clientId);
-                return ResponseEntity.ok().body("User deleted");
+        if(!client.isPresent()){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
         }
-        return ResponseEntity.notFound().build();
+
+        clientRepository.deleteById(clientId);
+        return ResponseEntity.ok().body("User deleted");
     }
 
     /* Update 1 client */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/clients/put/{clientId}")
-    public ResponseEntity<Optional<Client>> updateClient(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
+    public ResponseEntity<?> updateClient(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
+        if(!client.isPresent()){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
+        }
         client.ifPresent(c -> {
             c.setRoles(clientUpdate.getRoles());
             c.setEmail(clientUpdate.getEmail());
