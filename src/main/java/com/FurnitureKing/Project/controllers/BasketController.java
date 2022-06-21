@@ -53,7 +53,6 @@ public class BasketController {
     }
 
     /* Create basket */
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/basket/post")
     public ResponseEntity<String> addBasket(@RequestBody Basket basket) {
         basket.setCreatedAt(CurrentDateTime.getCurrentDateTime());

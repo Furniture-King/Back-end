@@ -36,7 +36,6 @@ public class ProductController {
     }
 
     /* Get products by popularity */
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products/popular")
     public ResponseEntity<List<Product>> getPopularProducts() {
         List<Product> productList = (productRepository.findAll(Sort.by(Sort.Direction.DESC,"stars")));
@@ -44,7 +43,6 @@ public class ProductController {
     }
 
     /* Search 1 product */
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products/id/{productId}")
     public ResponseEntity<Optional<Product>> getProduct(@PathVariable final ObjectId productId) {
         Optional<Product> product = productRepository.findById(productId);
@@ -55,7 +53,6 @@ public class ProductController {
     }
 
     /* Get all products by 1 category*/
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products/category/{categoryName}")
     public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
         String name = DataFormat.FormatString(categoryName);
@@ -68,7 +65,6 @@ public class ProductController {
     }
 
     /* Get all products from filters */
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/products/filter")
     public ResponseEntity<List<Product>> getCategoryProducts(@RequestBody final ProductFilter productfilter) {
 

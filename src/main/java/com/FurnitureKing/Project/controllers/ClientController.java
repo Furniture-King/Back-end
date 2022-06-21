@@ -43,7 +43,6 @@ public class ClientController {
 
 
     /* Search 1 client by Id */
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/clients/id/{clientId}")
     public ResponseEntity<Optional<Client>> getClient(@PathVariable final ObjectId clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
@@ -54,7 +53,6 @@ public class ClientController {
     }
 
     /* Search 1 client by email */
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/clients/email/{email}")
     public ResponseEntity<Optional<Client>> getClientByEmail(@PathVariable final String email) {
         Optional<Client> client = clientRepository.findByEmail(email);
