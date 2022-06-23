@@ -14,6 +14,7 @@ import com.FurnitureKing.Project.repositories.RoleRepository;
 import com.FurnitureKing.Project.security.jwt.JwtUtils;
 import com.FurnitureKing.Project.security.services.UserDetailsImpl;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -61,8 +63,11 @@ import java.util.stream.Collectors;
                     .map(item -> item.getAuthority())
                     .collect(Collectors.toList());
 
+            Optional<Client> Client = clientRepository.findByEmail(loginRequest.getEmail());
+            ObjectId idClient = Client.get().getId();
+
             return ResponseEntity.ok(new JwtResponse(jwt,
-                    userDetails.getId(),
+                    idClient,
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     roles));
