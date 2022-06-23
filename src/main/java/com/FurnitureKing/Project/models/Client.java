@@ -78,38 +78,6 @@ public class Client {
 
     public Client(){}
 
-    public Client(ObjectId id,
-                  String email,
-                  String passwordHash,
-                  String passwordSalt,
-                  Integer civility,
-                  String lastName,
-                  String firstName,
-                  String address,
-                  String postalCode,
-                  String city,
-                  String phone,
-                  Integer nbConnection,
-                  List<String> favProduct,
-                  long createdAt,
-                  long updatedAt) {
-        this.id = id;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
-        this.civility = civility;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.phone = phone;
-        this.nbConnection = nbConnection;
-        this.favProduct = favProduct;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
     public Client(String email, String password, Integer civility, String lastName, String firstName, String address, String postalCode, String city, String phone, Integer nbConnection, List<String> favProduct) {
         this.email = email;
         this.passwordHash = password;

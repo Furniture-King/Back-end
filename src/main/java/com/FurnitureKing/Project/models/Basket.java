@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Document(collection = "basket")
 public class Basket {
@@ -21,10 +22,14 @@ public class Basket {
     private List<BasketTab> basketTab;
 
     @Field
+    private Double basketTotalPrice;
+
+    @Field
     private long createdAt;
 
     @Field
     private long updatedAt;
+
 
     public Basket(){}
 
@@ -43,6 +48,9 @@ public class Basket {
 
     public List<BasketTab> getBasketTab() {return basketTab;}
     public void setBasketTab(List<BasketTab> basketTab) {this.basketTab = basketTab;}
+
+    public Double getBasketTotalPrice() {return basketTotalPrice;}
+    public void setBasketTotalPrice(Double basketTotalPrice) {this.basketTotalPrice = basketTotalPrice;}
 
     public long getCreatedAt() {return createdAt;}
     public void setCreatedAt(long createdAt) {this.createdAt = createdAt;}

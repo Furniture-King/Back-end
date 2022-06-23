@@ -1,18 +1,22 @@
 package com.FurnitureKing.Project.models;
 
-import org.bson.types.ObjectId;
 
 public class BasketTab {
 
-    private ObjectId productId;
+    private Product product;
 
     private Integer qté;
 
-    public ObjectId getProductId() {return productId;}
-    public void setProductId(ObjectId productId) {this.productId = productId;}
+    private Double priceProduct;
+
+    public Product getProduct() {return product;}
+    public void setProduct(Product product) {this.product = product;}
 
     public Integer getQté() {return qté;}
     public void setQté(Integer qté) {this.qté = qté;}
+
+    public Double getPriceProduct() {return priceProduct;}
+    public void setPriceProduct(Double priceProduct) {this.priceProduct = priceProduct;}
 
     public BasketTab() {}
 }

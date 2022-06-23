@@ -63,17 +63,16 @@ public class ClientController {
     /* Delete 1 client */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/clients/delete/{clientId}")
-    public ResponseEntity<?> deleteClient(@PathVariable final ObjectId clientId , HttpServletRequest request) {
+    public ResponseEntity<?> deleteClient(@PathVariable final ObjectId clientId ) {
 
         Optional<Client> client = clientRepository.findById(clientId);
-        System.out.println("ici " + jwtUtils.getEmailFromJwtToken(request.getHeader("Authorization")));
 
         if(!client.isPresent()){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
         }
 
         clientRepository.deleteById(clientId);
-        return ResponseEntity.ok().body("User deleted");
+        return ResponseEntity.ok().body(new MessageResponse("User deleted"));
     }
 
     /* Update 1 client */

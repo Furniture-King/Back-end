@@ -83,9 +83,7 @@ public class SignupRequest {
         return nbConnection;
     }
 
-    public List<String> getFavProduct() {
-        return favProduct;
-    }
+    public List<String> getFavProduct() {return favProduct;}
 
     public long getCreatedAt() {
         return createdAt;
