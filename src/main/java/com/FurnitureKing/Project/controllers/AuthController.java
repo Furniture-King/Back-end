@@ -1,14 +1,14 @@
 package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Client;
-import com.FurnitureKing.Project.models.Basket;
+import com.FurnitureKing.Project.models.ShoppingCart;
 import com.FurnitureKing.Project.models.ERole;
 import com.FurnitureKing.Project.models.Role;
 import com.FurnitureKing.Project.payload.request.LoginRequest;
 import com.FurnitureKing.Project.payload.request.SignupRequest;
 import com.FurnitureKing.Project.payload.response.JwtResponse;
 import com.FurnitureKing.Project.payload.response.MessageResponse;
-import com.FurnitureKing.Project.repositories.BasketRepository;
+import com.FurnitureKing.Project.repositories.ShoppingCartRepository;
 import com.FurnitureKing.Project.repositories.ClientRepository;
 import com.FurnitureKing.Project.repositories.RoleRepository;
 import com.FurnitureKing.Project.security.jwt.JwtUtils;
@@ -44,9 +44,9 @@ import java.util.stream.Collectors;
         @Autowired
         JwtUtils jwtUtils;
 
-        private final BasketRepository basketRepository;
+        private final ShoppingCartRepository shoppingCartRepository;
 
-        public AuthController(BasketRepository basketRepository) {this.basketRepository = basketRepository;}
+        public AuthController(ShoppingCartRepository shoppingCartRepository) {this.shoppingCartRepository = shoppingCartRepository;}
 
         @PostMapping("/sign-in")
         public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -117,8 +117,8 @@ import java.util.stream.Collectors;
             client.setNbConnection(1);
             client.setRoles(roles);
             clientRepository.save(client);
-            Basket basket = new Basket(client,CurrentDateTime.getCurrentDateTime());
-            basketRepository.insert(basket);
+            ShoppingCart shoppingCart = new ShoppingCart(client,CurrentDateTime.getCurrentDateTime());
+            shoppingCartRepository.insert(shoppingCart);
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         }
 }

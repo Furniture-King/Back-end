@@ -1,7 +1,7 @@
 package com.FurnitureKing.Project.models;
 
 
-public class BasketTab {
+public class ScItems {
 
     private Product product;
 
@@ -18,5 +18,5 @@ public class BasketTab {
     public Double getPriceProduct() {return priceProduct;}
     public void setPriceProduct(Double priceProduct) {this.priceProduct = priceProduct;}
 
-    public BasketTab() {}
+    public ScItems() {}
 }

@@ -7,11 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Document(collection = "basket")
-public class Basket {
+public class ShoppingCart {
     @Id
     private ObjectId id;
 
@@ -19,10 +17,10 @@ public class Basket {
     private Client client;
 
     @Field
-    private List<BasketTab> basketTab;
+    private List<ScItems> scItems;
 
     @Field
-    private Double basketTotalPrice;
+    private Double scTotalPrice;
 
     @Field
     private long createdAt;
@@ -31,24 +29,20 @@ public class Basket {
     private long updatedAt;
 
 
-    public Basket(){}
+    public ShoppingCart(){}
 
-    public Basket(Client client, List<BasketTab> basketTab) {
-        this.client = client;
-    }
+    public ShoppingCart(Client client, List<ScItems> scItems) {this.client = client;}
 
-    public Basket(Client client, long createdAt) {
-        this.client = client;
-    }
+    public ShoppingCart(Client client, long createdAt) {this.client = client;}
 
     public Client getClient() {return client;}
     public void setClient(Client client) {this.client = client;}
 
-    public List<BasketTab> getBasketTab() {return basketTab;}
-    public void setBasketTab(List<BasketTab> basketTab) {this.basketTab = basketTab;}
+    public List<ScItems> getScItems() {return scItems;}
+    public void setScItems(List<ScItems> basketTab) {this.scItems = scItems;}
 
-    public Double getBasketTotalPrice() {return basketTotalPrice;}
-    public void setBasketTotalPrice(Double basketTotalPrice) {this.basketTotalPrice = basketTotalPrice;}
+    public Double getSCTotalPrice() {return scTotalPrice;}
+    public void setSCTotalPrice(Double basketTotalPrice) {this.scTotalPrice = scTotalPrice;}
 
     public long getCreatedAt() {return createdAt;}
     public void setCreatedAt(long createdAt) {this.createdAt = createdAt;}

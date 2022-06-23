@@ -1,14 +1,13 @@
 package com.FurnitureKing.Project.stripe;
 
-import com.FurnitureKing.Project.models.Basket;
+import com.FurnitureKing.Project.models.ShoppingCart;
 import com.FurnitureKing.Project.models.Client;
-import com.FurnitureKing.Project.repositories.BasketRepository;
+import com.FurnitureKing.Project.repositories.ShoppingCartRepository;
 import com.FurnitureKing.Project.repositories.ClientRepository;
 import com.FurnitureKing.Project.security.jwt.AuthTokenFilter;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-import com.stripe.net.RequestOptions;
 import com.stripe.param.PaymentIntentCreateParams;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +23,12 @@ import java.util.Optional;
 class CreatePaymentIntent  {
 
     private final ClientRepository clientRepository;
-    private final BasketRepository basketRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
-    public CreatePaymentIntent(ClientRepository clientRepository, BasketRepository basketRepository) {
+    public CreatePaymentIntent(ClientRepository clientRepository, ShoppingCartRepository shoppingCartRepository) {
         this.clientRepository = clientRepository;
-        this.basketRepository = basketRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
     }
 
 
@@ -41,7 +40,7 @@ class CreatePaymentIntent  {
 
         Optional<Client> client = clientRepository.findByEmail(email);
 
-        Optional<Basket> basket = basketRepository.getBasketByClient_Id(client.get().getId());
+        Optional<ShoppingCart> basket = shoppingCartRepository.getShoppingCartByClient_Id(client.get().getId());
 
         Stripe.apiKey = "sk_test_51LDpezKmKOU8NVzEfs2k0AvFJXc5hhEbrFwIPtEjjD8VJNHOgwuWuvGx8cYgGRHUtBNit7uuUKjbII31yjXTuGAR00FDw4Uk4b";
         PaymentIntentCreateParams params =
