@@ -47,9 +47,7 @@ public class BasketController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/basket/client/{clientId}")
     public ResponseEntity<Optional<Basket>> getBasketByClientId(@PathVariable final ObjectId clientId) {
-        System.out.println("id reçu : " + clientId);
         Optional<Basket> basket = basketRepository.getBasketByClient_Id(clientId);
-        System.out.println("basket trouvé : " + basket.get().getCreatedAt());
         if (basket.isPresent()) {
             return ResponseEntity.ok(basket);
         }
