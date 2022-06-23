@@ -45,7 +45,7 @@ public class BasketController {
 
     /* Search 1 basket by client */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    @GetMapping("/basket/{clientId}")
+    @GetMapping("/basket/client/{clientId}")
     public ResponseEntity<Optional<Basket>> getBasketByClientId(@PathVariable final ObjectId clientId) {
         System.out.println("id reçu : " + clientId);
         Optional<Basket> basket = basketRepository.getBasketByClient_Id(clientId);
@@ -70,7 +70,7 @@ public class BasketController {
 
     /* Delete 1 product of basket*/
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    @PutMapping("/baskets/delete/product/{productId}/client/{clientId}")
+    @DeleteMapping("/baskets/delete/product/{productId}/client/{clientId}")
     public ResponseEntity<?> deleteBasket(@PathVariable final ObjectId productId ,@PathVariable final ObjectId clientId ) {
 
         Optional<Basket> Basket = basketRepository.getBasketByClient_Id(clientId);
