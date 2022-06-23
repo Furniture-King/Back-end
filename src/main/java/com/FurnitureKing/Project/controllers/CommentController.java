@@ -4,7 +4,6 @@ import com.FurnitureKing.Project.models.Comment;
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.repositories.CommentRepository;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
-import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

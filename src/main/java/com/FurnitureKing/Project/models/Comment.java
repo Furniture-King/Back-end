@@ -1,6 +1,5 @@
 package com.FurnitureKing.Project.models;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,7 +12,7 @@ import java.util.Set;
 @Document(collection = "comments")
 public class Comment {
     @Id
-    private ObjectId id;
+    private String id;
 
     @DBRef
     private Set<Client> client;

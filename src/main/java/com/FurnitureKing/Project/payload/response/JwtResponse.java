@@ -1,10 +1,7 @@
 package com.FurnitureKing.Project.payload.response;
 
-import com.FurnitureKing.Project.models.Client;
-import org.bson.types.ObjectId;
 
 import java.util.List;
-import java.util.Optional;
 
 public class JwtResponse {
 

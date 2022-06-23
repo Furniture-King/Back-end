@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Transporter {
     @Id
-    private ObjectId id;
+    private String id;
     @Field
     private String undertaking;
     @Field

@@ -10,7 +10,7 @@ import java.util.List;
 @Document(collection = "product")
 public class Product {
     @Id
-    private ObjectId id;
+    private String id;
     @Field
     private String categoryName;
     @Field
@@ -43,7 +43,7 @@ public class Product {
     public Product() {}
 
     public Product(
-            ObjectId id,
+            String id,
             String categoryName,
             String name,
             String color,
@@ -107,11 +107,11 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

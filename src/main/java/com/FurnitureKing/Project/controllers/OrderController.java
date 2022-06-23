@@ -1,12 +1,8 @@
 package com.FurnitureKing.Project.controllers;
 
-import com.FurnitureKing.Project.models.Client;
 import com.FurnitureKing.Project.models.Order;
-import com.FurnitureKing.Project.models.Product;
-import com.FurnitureKing.Project.models.Role;
 import com.FurnitureKing.Project.repositories.OrderRepository;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
-import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

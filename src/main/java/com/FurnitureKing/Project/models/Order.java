@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Order {
     @Id
-    private ObjectId id;
+    private String id;
     @Field
     private String number;
     @Field
@@ -40,8 +40,8 @@ public class Order {
     public List<BasketTab> getBasketTabs() {return basketTabs;}
     public void setBasketTabs(List<BasketTab> basketTabs) {this.basketTabs = basketTabs;}
 
-    public ObjectId getId() {return id;}
-    public void setId(ObjectId id) {this.id = id;}
+    public String getId() {return id;}
+    public void setId(String id) {this.id = id;}
 
     public String getNumber() {return number;}
     public void setNumber(String number) {this.number = number;}
