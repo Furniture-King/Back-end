@@ -7,7 +7,6 @@
     <list default="true" id="8bbe05d3-18c8-4860-a902-b36ae186835d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/BasketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/BasketController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Basket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Basket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

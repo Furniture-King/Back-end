@@ -117,7 +117,7 @@ import java.util.stream.Collectors;
             client.setNbConnection(1);
             client.setRoles(roles);
             clientRepository.save(client);
-            Basket basket = new Basket(client.getId(),CurrentDateTime.getCurrentDateTime());
+            Basket basket = new Basket(client,CurrentDateTime.getCurrentDateTime());
             basketRepository.insert(basket);
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         }

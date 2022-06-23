@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Document(collection = "basket")
 public class Basket {
@@ -14,7 +16,7 @@ public class Basket {
     private ObjectId id;
 
     @DBRef
-    private ObjectId clientId;
+    private Client client;
 
     @Field
     private List<BasketTab> basketTab;
@@ -31,18 +33,16 @@ public class Basket {
 
     public Basket(){}
 
-    public Basket(ObjectId clientId, List<BasketTab> basketTab) {
-        this.clientId = clientId;
-        this.basketTab = basketTab;
+    public Basket(Client client, List<BasketTab> basketTab) {
+        this.client = client;
     }
 
-    public Basket(ObjectId clientId, long createdAt) {
-        this.clientId = clientId;
-        this.createdAt = createdAt;
+    public Basket(Client client, long createdAt) {
+        this.client = client;
     }
 
-    public ObjectId getClientId() {return clientId;}
-    public void setClientId(ObjectId clientId) {this.clientId = clientId;}
+    public Client getClient() {return client;}
+    public void setClient(Client client) {this.client = client;}
 
     public List<BasketTab> getBasketTab() {return basketTab;}
     public void setBasketTab(List<BasketTab> basketTab) {this.basketTab = basketTab;}
