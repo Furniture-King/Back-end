@@ -67,7 +67,7 @@ public class CommentController {
     /* Delete 1 comments */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/comments/delete/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable final ObjectId commentId) {
+    public ResponseEntity<String> deleteComment(@PathVariable final String commentId) {
         Optional<Comment> comment = commentRepository.findById(commentId);
         if(comment.isPresent()){
             commentRepository.deleteById(commentId);
@@ -79,7 +79,7 @@ public class CommentController {
     /* Update 1 product */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/comments/put/{commentId}")
-    public ResponseEntity<Optional<Comment>> updateComment(@PathVariable final ObjectId commentId, @RequestBody Comment commentUpdate) {
+    public ResponseEntity<Optional<Comment>> updateComment(@PathVariable final String commentId, @RequestBody Comment commentUpdate) {
         Optional<Comment> comment = commentRepository.findById(commentId);
         comment.ifPresent(c -> {
             c.setNote(commentUpdate.getNote());

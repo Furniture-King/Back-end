@@ -18,7 +18,7 @@ import java.util.Set;
 @Document(collection = "client")
 public class Client {
     @Id
-    private ObjectId id;
+    private String id;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
@@ -92,8 +92,8 @@ public class Client {
         this.favProduct = favProduct;
     }
 
-    public ObjectId getId() {return id;}
-    public void setId(ObjectId id) {this.id = id;}
+    public String getId() {return id;}
+    public void setId(String id) {this.id = id;}
 
     public Set<Role> getRoles() {return roles;}
     public void setRoles(Set<Role> roles) {this.roles = roles;}

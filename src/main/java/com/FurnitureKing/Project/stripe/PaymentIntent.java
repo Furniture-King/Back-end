@@ -41,7 +41,7 @@ class CreatePaymentIntent  {
 
         Optional<Client> client = clientRepository.findByEmail(email);
 
-        Optional<Basket> basket = basketRepository.getBasketByClient_Id(client.get().getId());
+        Optional<Basket> basket = basketRepository.getBasketByClient_Id(client.get().getId().toString());
 
         Stripe.apiKey = "sk_test_51LDpezKmKOU8NVzEfs2k0AvFJXc5hhEbrFwIPtEjjD8VJNHOgwuWuvGx8cYgGRHUtBNit7uuUKjbII31yjXTuGAR00FDw4Uk4b";
         PaymentIntentCreateParams params =

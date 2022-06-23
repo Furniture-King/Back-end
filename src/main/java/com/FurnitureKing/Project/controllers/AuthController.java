@@ -64,7 +64,7 @@ import java.util.stream.Collectors;
                     .collect(Collectors.toList());
 
             Optional<Client> Client = clientRepository.findByEmail(loginRequest.getEmail());
-            ObjectId idClient = Client.get().getId();
+            String idClient = Client.get().getId().toString();
 
             return ResponseEntity.ok(new JwtResponse(jwt,
                     idClient,

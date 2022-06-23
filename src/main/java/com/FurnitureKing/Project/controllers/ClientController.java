@@ -42,7 +42,7 @@ public class ClientController {
 
     /* Search 1 client by Id */
     @GetMapping("/clients/id/{clientId}")
-    public ResponseEntity<?> getClient(@PathVariable final ObjectId clientId) {
+    public ResponseEntity<?> getClient(@PathVariable final String clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
         if(!client.isPresent()){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
@@ -63,7 +63,7 @@ public class ClientController {
     /* Delete 1 client */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/clients/delete/{clientId}")
-    public ResponseEntity<?> deleteClient(@PathVariable final ObjectId clientId ) {
+    public ResponseEntity<?> deleteClient(@PathVariable final String clientId ) {
 
         Optional<Client> client = clientRepository.findById(clientId);
 
@@ -78,7 +78,7 @@ public class ClientController {
     /* Update 1 client */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/clients/put/{clientId}")
-    public ResponseEntity<?> updateClient(@PathVariable final ObjectId clientId, @RequestBody Client clientUpdate) {
+    public ResponseEntity<?> updateClient(@PathVariable final String clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
         if(!client.isPresent()){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));

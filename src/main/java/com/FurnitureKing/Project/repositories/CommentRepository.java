@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository
-        extends MongoRepository<Comment, ObjectId> {
+        extends MongoRepository<Comment, String> {
 
-    List<Comment> findCommentByClientAndId(ObjectId clientId);
+    List<Comment> findCommentByClientAndId(String clientId);
 
-    List<Comment> findCommentsByProductAndIdEquals(ObjectId productId);
+    List<Comment> findCommentsByProductAndIdEquals(String productId);
 }

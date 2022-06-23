@@ -45,7 +45,7 @@ public class ProductController {
 
     /* Search 1 product */
     @GetMapping("/products/id/{productId}")
-    public ResponseEntity<?> getProduct(@PathVariable final ObjectId productId) {
+    public ResponseEntity<?> getProduct(@PathVariable final String productId) {
         Optional<Product> product = productRepository.findById(productId);
         if(!product.isPresent()){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: product doesn't exist!"));
@@ -108,7 +108,7 @@ public class ProductController {
     /* Delete 1 product */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/products/delete/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable final ObjectId productId) {
+    public ResponseEntity<String> deleteProduct(@PathVariable final String productId) {
         Optional<Product> product = productRepository.findById(productId);
         if(product.isPresent()){
             productRepository.deleteById(productId);
@@ -120,7 +120,7 @@ public class ProductController {
     /* Update 1 product */
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/products/put/{productId}")
-    public ResponseEntity<Optional<Product>> updateProduct(@PathVariable final ObjectId productId, @RequestBody Product productUpdate) {
+    public ResponseEntity<Optional<Product>> updateProduct(@PathVariable final String productId, @RequestBody Product productUpdate) {
         Optional<Product> product = productRepository.findById(productId);
         product.ifPresent(p -> {
             p.setName(productUpdate.getName());

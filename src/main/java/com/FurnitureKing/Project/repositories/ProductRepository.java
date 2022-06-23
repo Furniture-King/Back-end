@@ -11,13 +11,13 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository
-        extends MongoRepository<Product,ObjectId> {
+        extends MongoRepository<Product,String> {
 
 
     @Query("{ 'categoryName' : ?0 }")
     List<Product> findProductsByCategory(String category);
 
-    void deleteById(ObjectId productId);
+    void deleteById(String productId);
 
-    Optional<Product> findById(ObjectId productId);
+    Optional<Product> findById(String productId);
 }

@@ -9,9 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface BasketRepository
-        extends MongoRepository<Basket, ObjectId> {
+        extends MongoRepository<Basket, String> {
 
-    Optional<Basket> getBasketByClient_Id(ObjectId clientId);
-    Optional<Basket> findById(ObjectId basketId);
+    Optional<Basket> getBasketByClient_Id(String clientId);
+    Optional<Basket> findById(String basketId);
 
 }

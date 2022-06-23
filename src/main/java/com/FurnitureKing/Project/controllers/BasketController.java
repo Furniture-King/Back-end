@@ -35,7 +35,7 @@ public class BasketController {
     /* Search 1 basket by Id */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/basket/id/{basketId}")
-    public ResponseEntity<Optional<Basket>> getBasket(@PathVariable final ObjectId basketId) {
+    public ResponseEntity<Optional<Basket>> getBasket(@PathVariable final String basketId) {
         Optional<Basket> basket = basketRepository.findById(basketId);
         if (basket.isPresent()) {
             return ResponseEntity.ok(basket);
@@ -46,7 +46,7 @@ public class BasketController {
     /* Search 1 basket by client */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/basket/client/{clientId}")
-    public ResponseEntity<Optional<Basket>> getBasketByClientId(@PathVariable final ObjectId clientId) {
+    public ResponseEntity<Optional<Basket>> getBasketByClientId(@PathVariable final String clientId) {
         Optional<Basket> basket = basketRepository.getBasketByClient_Id(clientId);
         if (basket.isPresent()) {
             return ResponseEntity.ok(basket);
@@ -69,7 +69,7 @@ public class BasketController {
     /* Delete 1 product of basket*/
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/baskets/delete/product/{productId}/client/{clientId}")
-    public ResponseEntity<?> deleteBasket(@PathVariable final ObjectId productId ,@PathVariable final ObjectId clientId ) {
+    public ResponseEntity<?> deleteBasket(@PathVariable final String productId ,@PathVariable final String clientId ) {
 
         Optional<Basket> Basket = basketRepository.getBasketByClient_Id(clientId);
         if (Basket.isPresent()) {
@@ -108,7 +108,7 @@ public class BasketController {
     /* update 1 basket */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/baskets/put/client/{clientId}")
-    public ResponseEntity<String> updateBasket(@PathVariable final ObjectId clientId, @RequestBody BasketTab basketTab) {
+    public ResponseEntity<String> updateBasket(@PathVariable final String clientId, @RequestBody BasketTab basketTab) {
 
         Optional<Basket> Basket = basketRepository.getBasketByClient_Id(clientId);
         if(Basket.isPresent()) {

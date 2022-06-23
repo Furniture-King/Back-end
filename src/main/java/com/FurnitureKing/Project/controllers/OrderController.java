@@ -33,7 +33,7 @@ public class OrderController {
     /* Search 1 order by Id */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/orders/id/{orderId}")
-    public ResponseEntity<Optional<Order>> getOrder(@PathVariable final ObjectId orderId) {
+    public ResponseEntity<Optional<Order>> getOrder(@PathVariable final String orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
         if(order.isPresent()){
             return ResponseEntity.ok(order);
@@ -58,7 +58,7 @@ public class OrderController {
     /* Delete 1 order */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/orders/delete/{orderId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable final ObjectId orderId) {
+    public ResponseEntity<String> deleteOrder(@PathVariable final String orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
         if(order.isPresent()){
             orderRepository.deleteById(orderId);
@@ -70,7 +70,7 @@ public class OrderController {
     /* Update 1 order */
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/orders/put/{orderId}")
-    public ResponseEntity<Optional<Order>> updateProduct(@PathVariable final ObjectId orderId, @RequestBody Order orderUpdate) {
+    public ResponseEntity<Optional<Order>> updateProduct(@PathVariable final String orderId, @RequestBody Order orderUpdate) {
         Optional<Order> order = orderRepository.findById(orderId);
         order.ifPresent(o -> {
             o.setAddress(orderUpdate.getAddress());
