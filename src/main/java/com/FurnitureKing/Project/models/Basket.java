@@ -35,10 +35,12 @@ public class Basket {
 
     public Basket(Client client, List<BasketTab> basketTab) {
         this.client = client;
+        this.basketTab = basketTab;
     }
 
     public Basket(Client client, long createdAt) {
         this.client = client;
+        this.createdAt = createdAt;
     }
 
     public Client getClient() {return client;}
