@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
                     .collect(Collectors.toList());
 
             Optional<Client> Client = clientRepository.findByEmail(loginRequest.getEmail());
-            String idClient = Client.get().getId().toString();
+            String idClient = Client.get().getId();
 
             return ResponseEntity.ok(new JwtResponse(jwt,
                     idClient,
@@ -122,6 +122,7 @@ import java.util.stream.Collectors;
             client.setRoles(roles);
             clientRepository.save(client);
             Basket basket = new Basket(client,CurrentDateTime.getCurrentDateTime());
+            basket.setBasketTotalPrice(0.0);
             basketRepository.insert(basket);
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         }

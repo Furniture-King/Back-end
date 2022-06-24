@@ -53,6 +53,21 @@ public class BasketController {
         return ResponseEntity.notFound().build();
     }
 
+    /* Search nb of items in basket */
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/basket/count/client/{clientId}")
+    public ResponseEntity<?> getBasketCountByClientId(@PathVariable final String clientId) {
+        Optional<Basket> basket = basketRepository.getBasketByClient_Id(clientId);
+        AtomicReference<Integer> count = new AtomicReference<>(0);
+        if (basket.isPresent() && basket.get().getBasketTab().stream().count() > 0) {
+            basket.get().getBasketTab().forEach(bT ->{
+                count.updateAndGet(v -> v + bT.getQté());
+            });
+        }
+        return ResponseEntity.ok(count);
+    }
+
+
     /* Create basket */
     @PostMapping(value = "/basket/post")
     public ResponseEntity<MessageResponse> addBasket(@RequestBody Basket basket) {
@@ -61,9 +76,6 @@ public class BasketController {
 
         return ResponseEntity.ok().body(new MessageResponse("The basket is created"));
     }
-
-
-
 
     /* Delete 1 product of basket*/
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")

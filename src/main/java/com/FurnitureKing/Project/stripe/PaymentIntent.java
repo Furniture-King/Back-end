@@ -2,6 +2,7 @@ package com.FurnitureKing.Project.stripe;
 
 import com.FurnitureKing.Project.models.Basket;
 import com.FurnitureKing.Project.models.Client;
+import com.FurnitureKing.Project.payload.response.MessageResponse;
 import com.FurnitureKing.Project.repositories.BasketRepository;
 import com.FurnitureKing.Project.repositories.ClientRepository;
 import com.FurnitureKing.Project.security.jwt.AuthTokenFilter;
@@ -42,6 +43,10 @@ class CreatePaymentIntent  {
         Optional<Client> client = clientRepository.findByEmail(email);
 
         Optional<Basket> basket = basketRepository.getBasketByClient_Id(client.get().getId().toString());
+
+        if(basket.get().getBasketTotalPrice() < 1){
+            return ResponseEntity.badRequest().body(new MessageResponse("Paiement inférieur au montant minimal autorisé"));
+        }
 
         Stripe.apiKey = "sk_test_51LDpezKmKOU8NVzEfs2k0AvFJXc5hhEbrFwIPtEjjD8VJNHOgwuWuvGx8cYgGRHUtBNit7uuUKjbII31yjXTuGAR00FDw4Uk4b";
         PaymentIntentCreateParams params =
