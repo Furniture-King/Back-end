@@ -1,5 +1,6 @@
 package com.FurnitureKing.Project.controllers;
 
+import com.FurnitureKing.Project.models.BasketTab;
 import com.FurnitureKing.Project.models.Fav;
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.payload.response.MessageResponse;
@@ -53,10 +54,18 @@ public class FavController {
 
     /* Delete 1 fav */
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/favs/delete/{favId}")
-    public ResponseEntity<?> deleteFav(@PathVariable final String favId) {
+    @DeleteMapping("/favs/delete/product/{productId}/client/{clientId}")
+    public ResponseEntity<?> deleteFav(@PathVariable final String clientId,@PathVariable final String productId ) {
 
-        Optional<Fav> fav = favRepository.findById(favId);
+        Optional<Fav> fav = favRepository.getFavByClient_Id(clientId);
+
+        List<Product> listProducts = new ArrayList<Product>();
+        fav.get().getProducts().forEach(fP ->{
+            if(!fP.getId().equals(productId)){
+                listProducts
+            }
+        });
+
 
         if (!fav.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: fav doesn't exist!"));

@@ -64,6 +64,16 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products/category")
+    public ResponseEntity<?> getCategory(){
+        List<String> listCategory = productRepository.getDistinctByCategoryName();
+        if(!listCategory.isEmpty()){
+            return ResponseEntity.ok(listCategory);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     /* Get all products from filters */
     @GetMapping("/products/filter")
     public ResponseEntity<List<Product>> getCategoryProducts(@RequestBody final ProductFilter productfilter) {

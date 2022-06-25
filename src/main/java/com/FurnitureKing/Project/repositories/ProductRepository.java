@@ -16,6 +16,8 @@ public interface ProductRepository
     @Query("{ 'categoryName' : ?0 }")
     List<Product> findProductsByCategory(String category);
 
+    List<String> getDistinctByCategoryName();
+
     void deleteById(String productId);
 
     Optional<Product> findById(String productId);
