@@ -32,6 +32,7 @@ public class Fav {
         this.createdAt = createdAt;
     }
 
+
     public Fav(Client client, long createdAt) {
         this.client = client;
         this.createdAt = createdAt;

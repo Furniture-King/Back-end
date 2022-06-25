@@ -1,6 +1,6 @@
 package com.FurnitureKing.Project.controllers;
 
-import com.FurnitureKing.Project.models.BasketTab;
+import com.FurnitureKing.Project.models.Basket;
 import com.FurnitureKing.Project.models.Fav;
 import com.FurnitureKing.Project.models.Product;
 import com.FurnitureKing.Project.payload.response.MessageResponse;
@@ -55,29 +55,30 @@ public class FavController {
     /* Delete 1 fav */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/favs/delete/product/{productId}/client/{clientId}")
-    public ResponseEntity<?> deleteFav(@PathVariable final String clientId,@PathVariable final String productId ) {
+    public ResponseEntity<?> deleteFav(@PathVariable final String clientId, @PathVariable final String productId) {
 
         Optional<Fav> fav = favRepository.getFavByClient_Id(clientId);
+        if(fav.isPresent()){
+            List<Product> listProducts = new ArrayList<>();
+            fav.get().getProducts().forEach(fP -> {
+                if (!fP.getId().equals(productId)) {
+                    listProducts.add(fP);
+                }
+            });
 
-        List<Product> listProducts = new ArrayList<Product>();
-        fav.get().getProducts().forEach(fP ->{
-            if(!fP.getId().equals(productId)){
-                listProducts
-            }
-        });
+            fav.get().setProducts(listProducts);
 
-
-        if (!fav.isPresent()) {
+            fav.ifPresent(favRepository::save);
+            return ResponseEntity.ok().body(new MessageResponse("Product deleted on Fav"));
+        }else{
             return ResponseEntity.badRequest().body(new MessageResponse("Error: fav doesn't exist!"));
-        } else {
-            favRepository.deleteById(favId);
-            return ResponseEntity.ok().body(new MessageResponse("Fav deleted"));
         }
+
     }
 
     /* Update 1 fav */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    @PutMapping("/fav/put/{clientId}")
+    @PutMapping("/fav/put/client/ a{clientId}")
     public ResponseEntity<?> updateFav(@PathVariable final String clientId, @RequestBody Product product) {
         Optional<Fav> fav = favRepository.getFavByClient_Id(clientId);
 
