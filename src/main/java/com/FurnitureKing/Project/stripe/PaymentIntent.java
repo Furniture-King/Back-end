@@ -40,29 +40,32 @@ class CreatePaymentIntent  {
 
         String email = Jwts.parser().setSigningKey("fkSecretKey").parseClaimsJws(AuthTokenFilter.parseJwt(request)).getBody().getSubject();
 
-        Optional<Client> client = clientRepository.findByEmail(email);
+        if(!email.isEmpty()){
+            Optional<Client> client = clientRepository.findByEmail(email);
+            if(client.isPresent()){
+                Optional<Basket> basket = basketRepository.getBasketByClient_Id(client.get().getId().toString());
+                if(basket.get().getBasketTotalPrice() < 1){
+                    return ResponseEntity.badRequest().body(new MessageResponse("Error : Payment below amount needed !"));
+                }else{
+                    Stripe.apiKey = "sk_test_51LDpezKmKOU8NVzEfs2k0AvFJXc5hhEbrFwIPtEjjD8VJNHOgwuWuvGx8cYgGRHUtBNit7uuUKjbII31yjXTuGAR00FDw4Uk4b";
+                    PaymentIntentCreateParams params =
+                            PaymentIntentCreateParams.builder()
+                                    .setAmount((long) (int) (basket.get().getBasketTotalPrice() * 100))
+                                    .setCurrency("eur")
+                                    .setAutomaticPaymentMethods(
+                                            PaymentIntentCreateParams.AutomaticPaymentMethods
+                                                    .builder()
+                                                    .setEnabled(true)
+                                                    .build()
+                                    )
+                                    .build();
 
-        Optional<Basket> basket = basketRepository.getBasketByClient_Id(client.get().getId().toString());
+                    PaymentIntent paymentIntent = PaymentIntent.create(params);
 
-        if(basket.get().getBasketTotalPrice() < 1){
-            return ResponseEntity.badRequest().body(new MessageResponse("Paiement inférieur au montant minimal autorisé"));
+                    return ResponseEntity.ok(paymentIntent.getClientSecret());
+                }
+            }
         }
-
-        Stripe.apiKey = "sk_test_51LDpezKmKOU8NVzEfs2k0AvFJXc5hhEbrFwIPtEjjD8VJNHOgwuWuvGx8cYgGRHUtBNit7uuUKjbII31yjXTuGAR00FDw4Uk4b";
-        PaymentIntentCreateParams params =
-                PaymentIntentCreateParams.builder()
-                        .setAmount((long) (int) (basket.get().getBasketTotalPrice() * 100))
-                        .setCurrency("eur")
-                        .setAutomaticPaymentMethods(
-                                PaymentIntentCreateParams.AutomaticPaymentMethods
-                                        .builder()
-                                        .setEnabled(true)
-                                        .build()
-                        )
-                        .build();
-
-        PaymentIntent paymentIntent = PaymentIntent.create(params);
-
-        return ResponseEntity.ok(paymentIntent.getClientSecret());
+        return ResponseEntity.badRequest().body(new MessageResponse("Error : Client or Basket don't exist !"));
     }
 }
