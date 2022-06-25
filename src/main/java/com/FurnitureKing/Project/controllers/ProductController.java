@@ -37,7 +37,7 @@ public class ProductController {
     /* Get products by popularity */
     @GetMapping("/products/popular")
     public ResponseEntity<List<Product>> getPopularProducts() {
-        List<Product> productList = (productRepository.findAll(Sort.by(Sort.Direction.DESC,"stars")));
+        List<Product> productList = (productRepository.findAll(Sort.by(Sort.Direction.DESC, "stars")));
         return ResponseEntity.ok(productList);
     }
 
@@ -45,10 +45,11 @@ public class ProductController {
     @GetMapping("/products/id/{productId}")
     public ResponseEntity<?> getProduct(@PathVariable final String productId) {
         Optional<Product> product = productRepository.findById(productId);
-        if(!product.isPresent()){
+        if (!product.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: product doesn't exist!"));
+        } else {
+            return ResponseEntity.ok(product);
         }
-        return ResponseEntity.ok(product);
     }
 
     /* Get all products by 1 category*/
@@ -56,9 +57,9 @@ public class ProductController {
     public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
         String name = DataFormat.FormatString(categoryName);
         List<Product> product = productRepository.findProductsByCategory(name);
-        if(product.isEmpty()){
+        if (product.isEmpty()) {
             return (List<Product>) ResponseEntity.notFound().build();
-        }else{
+        } else {
             return (List<Product>) ResponseEntity.ok(product);
         }
     }
@@ -69,33 +70,33 @@ public class ProductController {
 
         List<Product> productList = productRepository.findAll();
 
-        if(productfilter.getCategoryName() != null){
+        if (productfilter.getCategoryName() != null) {
             productList = productList.stream().filter(product -> Objects.equals(product.getCategoryName(), productfilter.getCategoryName())).collect(Collectors.<Product>toList());
         }
-        if(productfilter.getColor() != null){
+        if (productfilter.getColor() != null) {
             productList = productList.stream().filter(product -> Objects.equals(product.getColor(), productfilter.getColor())).collect(Collectors.<Product>toList());
         }
-        if(productfilter.getfirstPrice() != null && productfilter.getsecondPrice() != null){
-            productList = productList.stream().filter(product -> product.getPrice() > productfilter.getfirstPrice() && product.getPrice() < productfilter.getsecondPrice() ).collect(Collectors.<Product>toList());
+        if (productfilter.getfirstPrice() != null && productfilter.getsecondPrice() != null) {
+            productList = productList.stream().filter(product -> product.getPrice() > productfilter.getfirstPrice() && product.getPrice() < productfilter.getsecondPrice()).collect(Collectors.<Product>toList());
         }
-       if(productfilter.getStars() != null){
-           productList = productList.stream().filter(product -> Objects.equals(product.getStars(), productfilter.getStars())).collect(Collectors.<Product>toList());
-       }
-        if(productfilter.getStock() != null){
+        if (productfilter.getStars() != null) {
+            productList = productList.stream().filter(product -> Objects.equals(product.getStars(), productfilter.getStars())).collect(Collectors.<Product>toList());
+        }
+        if (productfilter.getStock() != null) {
             productList = productList.stream().filter(product -> Objects.equals(product.getStock(), productfilter.getStock())).collect(Collectors.<Product>toList());
         }
-            return ResponseEntity.ok(productList);
+        return ResponseEntity.ok(productList);
     }
 
     /* Create product */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/products/post")
-    public ResponseEntity<String> addProduct(@RequestBody Product product){
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
         product.setCreatedAt(CurrentDateTime.getCurrentDateTime());
         if (product.getCategoryName().isEmpty()) {
-            return ResponseEntity.ok().body("missing product category");
-        }
-        else{
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: category name doesn't exist!"));
+
+        } else {
             product.setCategoryName(DataFormat.FormatString(product.getCategoryName()));
             product.setColor(DataFormat.FormatString(product.getColor()));
             productRepository.insert(product);
@@ -106,9 +107,9 @@ public class ProductController {
     /* Delete 1 product */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/products/delete/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable final String productId) {
+    public ResponseEntity<?> deleteProduct(@PathVariable final String productId) {
         Optional<Product> product = productRepository.findById(productId);
-        if(product.isPresent()){
+        if (product.isPresent()) {
             productRepository.deleteById(productId);
             return ResponseEntity.ok().body("Product deleted");
         }

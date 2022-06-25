@@ -43,35 +43,38 @@ public class ClientController {
     @GetMapping("/clients/id/{clientId}")
     public ResponseEntity<?> getClient(@PathVariable final String clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
-        if(!client.isPresent()){
+        if (!client.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
+        } else {
+            return ResponseEntity.ok(client);
         }
-        return ResponseEntity.ok(client);
     }
 
     /* Search 1 client by email */
     @GetMapping("/clients/email/{email}")
     public ResponseEntity<?> getClientByEmail(@PathVariable final String email) {
         Optional<Client> client = clientRepository.findByEmail(email);
-        if(!client.isPresent()){
+        if (!client.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: email doesn't exist!"));
+        } else {
+            return ResponseEntity.ok(client);
         }
-        return ResponseEntity.ok(client);
     }
 
     /* Delete 1 client */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/clients/delete/{clientId}")
-    public ResponseEntity<?> deleteClient(@PathVariable final String clientId ) {
+    public ResponseEntity<?> deleteClient(@PathVariable final String clientId) {
 
         Optional<Client> client = clientRepository.findById(clientId);
 
-        if(!client.isPresent()){
+        if (!client.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
+        } else {
+            clientRepository.deleteById(clientId);
+            return ResponseEntity.ok().body(new MessageResponse("User deleted"));
         }
 
-        clientRepository.deleteById(clientId);
-        return ResponseEntity.ok().body(new MessageResponse("User deleted"));
     }
 
     /* Update 1 client */
@@ -79,24 +82,25 @@ public class ClientController {
     @PutMapping("/clients/put/{clientId}")
     public ResponseEntity<?> updateClient(@PathVariable final String clientId, @RequestBody Client clientUpdate) {
         Optional<Client> client = clientRepository.findById(clientId);
-        if(!client.isPresent()){
+        if (!client.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: client doesn't exist!"));
+        } else {
+            client.ifPresent(c -> {
+                c.setRoles(clientUpdate.getRoles());
+                c.setEmail(clientUpdate.getEmail());
+                c.setCivility(clientUpdate.getCivility());
+                c.setLastName(clientUpdate.getLastName());
+                c.setFirstName(clientUpdate.getFirstName());
+                c.setAddress(clientUpdate.getAddress());
+                c.setPostalCode(clientUpdate.getPostalCode());
+                c.setCity(clientUpdate.getCity());
+                c.setPhone(clientUpdate.getPhone());
+                c.setFavProduct(clientUpdate.getFavProduct());
+                c.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
+                clientRepository.save(c);
+            });
+            return ResponseEntity.ok(client);
         }
-        client.ifPresent(c -> {
-            c.setRoles(clientUpdate.getRoles());
-            c.setEmail(clientUpdate.getEmail());
-            c.setCivility(clientUpdate.getCivility());
-            c.setLastName(clientUpdate.getLastName());
-            c.setFirstName(clientUpdate.getFirstName());
-            c.setAddress(clientUpdate.getAddress());
-            c.setPostalCode(clientUpdate.getPostalCode());
-            c.setCity(clientUpdate.getCity());
-            c.setPhone(clientUpdate.getPhone());
-            c.setFavProduct(clientUpdate.getFavProduct());
-            c.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
-            clientRepository.save(c);
-        });
-        return ResponseEntity.ok(client);
     }
 
 }

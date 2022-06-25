@@ -38,8 +38,9 @@ public class BasketController {
         Optional<Basket> basket = basketRepository.findById(basketId);
         if (basket.isPresent()) {
             return ResponseEntity.ok(basket);
+        }else{
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     /* Search 1 basket by client */
@@ -49,8 +50,9 @@ public class BasketController {
         Optional<Basket> basket = basketRepository.getBasketByClient_Id(clientId);
         if (basket.isPresent()) {
             return ResponseEntity.ok(basket);
+        }else{
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     /* Search nb of items in basket */
@@ -73,7 +75,6 @@ public class BasketController {
     public ResponseEntity<MessageResponse> addBasket(@RequestBody Basket basket) {
         basket.setCreatedAt(CurrentDateTime.getCurrentDateTime());
         basketRepository.insert(basket);
-
         return ResponseEntity.ok().body(new MessageResponse("The basket is created"));
     }
 
@@ -108,18 +109,18 @@ public class BasketController {
             });
             Basket.get().setBasketTotalPrice(basketTotalPrice.get());
 
-
             Basket.get().setUpdatedAt(CurrentDateTime.getCurrentDateTime());
             Basket.ifPresent(basketRepository::save);
             return ResponseEntity.ok().body(new MessageResponse("The basket is deleted"));
+        }else{
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     /* update 1 basket */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/baskets/put/client/{clientId}")
-    public ResponseEntity<String> updateBasket(@PathVariable final String clientId, @RequestBody BasketTab basketTab) {
+    public ResponseEntity<MessageResponse> updateBasket(@PathVariable final String clientId, @RequestBody BasketTab basketTab) {
 
         Optional<Basket> Basket = basketRepository.getBasketByClient_Id(clientId);
         if(Basket.isPresent()) {
@@ -132,7 +133,7 @@ public class BasketController {
             } else {
                 final Boolean[] Present = {false};
                 BasketTab.forEach(bT -> {
-                    if (bT.getProduct().getId().toString().equals(basketTab.getProduct().getId().toString())) {
+                    if (bT.getProduct().getId().equals(basketTab.getProduct().getId().toString())) {
                         Present[0] = true;
                         if (basketTab.getQté() == null) {
                             bT.setQté(1);
@@ -154,10 +155,12 @@ public class BasketController {
                 basketTotalPrice.updateAndGet(v -> v + bT.getPriceProduct());
             });
             Basket.get().setBasketTotalPrice(basketTotalPrice.get());
+        }else{
+            return ResponseEntity.ok().body(new MessageResponse("Error : Basket not found !"));
         }
 
-
+        Basket.get().setUpdatedAt(CurrentDateTime.getCurrentDateTime());
         Basket.ifPresent(basketRepository::save);
-        return ResponseEntity.ok().body("Basket updated successfully!");
+        return ResponseEntity.ok().body(new MessageResponse("Basket updated successfully !"));
     }
 }

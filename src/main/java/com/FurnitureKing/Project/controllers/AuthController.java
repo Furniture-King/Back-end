@@ -1,15 +1,13 @@
 package com.FurnitureKing.Project.controllers;
 
-import com.FurnitureKing.Project.models.Client;
-import com.FurnitureKing.Project.models.Basket;
-import com.FurnitureKing.Project.models.ERole;
-import com.FurnitureKing.Project.models.Role;
+import com.FurnitureKing.Project.models.*;
 import com.FurnitureKing.Project.payload.request.LoginRequest;
 import com.FurnitureKing.Project.payload.request.SignupRequest;
 import com.FurnitureKing.Project.payload.response.JwtResponse;
 import com.FurnitureKing.Project.payload.response.MessageResponse;
 import com.FurnitureKing.Project.repositories.BasketRepository;
 import com.FurnitureKing.Project.repositories.ClientRepository;
+import com.FurnitureKing.Project.repositories.FavRepository;
 import com.FurnitureKing.Project.repositories.RoleRepository;
 import com.FurnitureKing.Project.security.jwt.JwtUtils;
 import com.FurnitureKing.Project.security.services.UserDetailsImpl;
@@ -46,8 +44,12 @@ import java.util.stream.Collectors;
         JwtUtils jwtUtils;
 
         private final BasketRepository basketRepository;
+        private final FavRepository favRepository;
 
-        public AuthController(BasketRepository basketRepository) {this.basketRepository = basketRepository;}
+        public AuthController(BasketRepository basketRepository, FavRepository favRepository) {
+            this.basketRepository = basketRepository;
+            this.favRepository = favRepository;
+        }
 
         @PostMapping("/sign-in")
         public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -124,6 +126,8 @@ import java.util.stream.Collectors;
             Basket basket = new Basket(client,CurrentDateTime.getCurrentDateTime());
             basket.setBasketTotalPrice(0.0);
             basketRepository.insert(basket);
+            Fav fav = new Fav(client,CurrentDateTime.getCurrentDateTime());
+            favRepository.insert(fav);
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         }
 }

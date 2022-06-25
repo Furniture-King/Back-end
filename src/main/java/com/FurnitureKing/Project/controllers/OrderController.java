@@ -1,6 +1,7 @@
 package com.FurnitureKing.Project.controllers;
 
 import com.FurnitureKing.Project.models.Order;
+import com.FurnitureKing.Project.payload.response.MessageResponse;
 import com.FurnitureKing.Project.repositories.OrderRepository;
 import com.FurnitureKing.Project.utils.CurrentDateTime;
 import org.springframework.http.ResponseEntity;
@@ -33,34 +34,36 @@ public class OrderController {
         Optional<Order> order = orderRepository.findById(orderId);
         if(order.isPresent()){
             return ResponseEntity.ok(order);
+        }else{
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     /* Create order */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/orders/post")
-    public ResponseEntity<String> addOrder(@RequestBody Order order){
+    public ResponseEntity<MessageResponse> addOrder(@RequestBody Order order){
         order.setCreatedAt(CurrentDateTime.getCurrentDateTime());
         if(order.getBasketTabs().isEmpty()){
-            return ResponseEntity.badRequest().body("No product in this order");
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: No product in this order ! "));
+
         }else{
             orderRepository.insert(order);
-            return ResponseEntity.ok().body("The order is created");
+            return ResponseEntity.ok().body(new MessageResponse("The order is created"));
         }
-
     }
 
     /* Delete 1 order */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/orders/delete/{orderId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable final String orderId) {
+    public ResponseEntity<MessageResponse> deleteOrder(@PathVariable final String orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
         if(order.isPresent()){
             orderRepository.deleteById(orderId);
-            return ResponseEntity.ok().body("Order deleted");
+            return ResponseEntity.badRequest().body(new MessageResponse("Order deleted"));
+        }else{
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: order not found !"));
         }
-        return ResponseEntity.notFound().build();
     }
 
     /* Update 1 order */

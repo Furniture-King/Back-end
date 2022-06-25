@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
-@Document(collection = "basket")
-public class Basket {
+@Document(collection = "fav")
+public class Fav {
     @Id
     private String id;
 
@@ -16,10 +16,7 @@ public class Basket {
     private Client client;
 
     @Field
-    private List<BasketTab> basketTab;
-
-    @Field
-    private Double basketTotalPrice;
+    private List<Product> products;
 
     @Field
     private long createdAt;
@@ -28,19 +25,26 @@ public class Basket {
     private long updatedAt;
 
 
-    public Basket(Client client, long createdAt) {
+    public Fav(String id, Client client, List<Product> product, long createdAt) {
+        this.id = id;
+        this.client = client;
+        this.products = product;
+        this.createdAt = createdAt;
+    }
+
+    public Fav(Client client, long createdAt) {
         this.client = client;
         this.createdAt = createdAt;
     }
 
+    public String getId() {return id;}
+    public void setId(String id) {this.id = id;}
+
     public Client getClient() {return client;}
     public void setClient(Client client) {this.client = client;}
 
-    public List<BasketTab> getBasketTab() {return basketTab;}
-    public void setBasketTab(List<BasketTab> basketTab) {this.basketTab = basketTab;}
-
-    public Double getBasketTotalPrice() {return basketTotalPrice;}
-    public void setBasketTotalPrice(Double basketTotalPrice) {this.basketTotalPrice = basketTotalPrice;}
+    public List<Product> getProducts() {return products;}
+    public void setProducts(List<Product> products) {this.products = products;}
 
     public long getCreatedAt() {return createdAt;}
     public void setCreatedAt(long createdAt) {this.createdAt = createdAt;}
