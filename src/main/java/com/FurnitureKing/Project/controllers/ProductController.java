@@ -54,13 +54,13 @@ public class ProductController {
 
     /* Get all products by 1 category*/
     @GetMapping("/products/category/{categoryName}")
-    public List<Product> getCategoryProducts(@PathVariable final String categoryName) {
+    public ResponseEntity<?> getCategoryProducts(@PathVariable final String categoryName) {
         String name = DataFormat.FormatString(categoryName);
-        List<Product> product = productRepository.findProductsByCategory(name);
-        if (product.isEmpty()) {
-            return (List<Product>) ResponseEntity.notFound().build();
+        List<Product> listProduct = productRepository.findProductsByCategory(name);
+        if (listProduct.isEmpty()) {
+            return  ResponseEntity.notFound().build();
         } else {
-            return (List<Product>) ResponseEntity.ok(product);
+            return  ResponseEntity.ok(listProduct);
         }
     }
 
