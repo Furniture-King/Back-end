@@ -87,6 +87,30 @@ public class Client {
         this.nbConnection = nbConnection;
     }
 
+    public Client(String email, String passwordHash, String username, String lastName, String firstName, String address, String postalCode, String city, String phone, Integer nbConnection) {
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.username = username;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.phone = phone;
+        this.nbConnection = nbConnection;
+    }
+    public Client(String email, String password, String lastName, String firstName, String address, String postalCode, String city, String phone, Integer nbConnection) {
+        this.email = email;
+        this.passwordHash = password;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.phone = phone;
+        this.nbConnection = nbConnection;
+    }
+
     public String getId() {return id;}
     public void setId(String id) {this.id = id;}
 

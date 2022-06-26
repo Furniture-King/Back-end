@@ -5,23 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8bbe05d3-18c8-4860-a902-b36ae186835d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/PackageRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/FurnitureKing/Project/controller/client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/FurnitureKing/Project/controller/productTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/BasketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/BasketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/controllers/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/filters/ProductFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/filters/ProductFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Package.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Package.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/models/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/payload/request/SignupRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/payload/request/SignupRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/RoleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/TransporterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/repositories/TransporterRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/FurnitureKing/Project/controller/client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/FurnitureKing/Project/controller/clientTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/FurnitureKing/Project/controller/productTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/FurnitureKing/Project/controller/productTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +61,7 @@
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
-  <component name="RunManager" selected="Spring Boot.ProjectApplication">
+  <component name="RunManager" selected="JUnit.productTests.shouldCreateProduct">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-15" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -87,6 +74,69 @@
     <configuration name="generated-requests#20" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="20" runType="Run single request">
       <method v="2" />
     </configuration>
+    <configuration name="productTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.FurnitureKing.Project.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.FurnitureKing.Project.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.FurnitureKing.Project.controller.productTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="productTests.shouldCreateProduct" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.FurnitureKing.Project.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.FurnitureKing.Project.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.FurnitureKing.Project.controller.productTests" />
+      <option name="METHOD_NAME" value="shouldCreateProduct" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="productTests.shouldReturnListOfProducts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.FurnitureKing.Project.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.FurnitureKing.Project.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.FurnitureKing.Project.controller.productTests" />
+      <option name="METHOD_NAME" value="shouldReturnListOfProducts" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="productTests.shouldReturnListOfTutorials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.FurnitureKing.Project.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.FurnitureKing.Project.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.FurnitureKing.Project.controller.productTests" />
+      <option name="METHOD_NAME" value="shouldReturnListOfTutorials" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProjectApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="Project" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.FurnitureKing.Project.ProjectApplication" />
@@ -96,6 +146,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.productTests.shouldCreateProduct" />
+        <item itemvalue="JUnit.productTests.shouldReturnListOfProducts" />
+        <item itemvalue="JUnit.productTests.shouldReturnListOfTutorials" />
+        <item itemvalue="JUnit.productTests" />
         <item itemvalue="HTTP Request.generated-requests#20" />
       </list>
     </recent_temporary>
@@ -158,7 +212,7 @@
       <workItem from="1655990684426" duration="5566000" />
       <workItem from="1656153925257" duration="14629000" />
       <workItem from="1656194171858" duration="11671000" />
-      <workItem from="1656239936175" duration="10388000" />
+      <workItem from="1656239936175" duration="24095000" />
     </task>
     <servers />
   </component>
@@ -184,11 +238,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/FurnitureKing/Project/utils/DataFormat.java</url>
           <line>8</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/com/FurnitureKing/Project/controller/productTests.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
