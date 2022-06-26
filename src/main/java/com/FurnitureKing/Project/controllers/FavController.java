@@ -49,7 +49,7 @@ public class FavController {
         if (!fav.isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: fav doesn't exist!"));
         } else {
-            return ResponseEntity.ok(fav);
+            return ResponseEntity.ok(fav.get().getProducts());
         }
     }
 
@@ -59,7 +59,7 @@ public class FavController {
     public ResponseEntity<?> deleteFav(@PathVariable final String clientId, @PathVariable final String productId) {
 
         Optional<Fav> fav = favRepository.getFavByClient_Id(clientId);
-        if(fav.isPresent()){
+        if (fav.isPresent()) {
             List<Product> listProducts = new ArrayList<>();
             fav.get().getProducts().forEach(fP -> {
                 if (!fP.getId().equals(productId)) {
@@ -71,7 +71,7 @@ public class FavController {
 
             fav.ifPresent(favRepository::save);
             return ResponseEntity.ok().body(new MessageResponse("Product deleted on Fav"));
-        }else{
+        } else {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: fav doesn't exist!"));
         }
 
@@ -81,31 +81,31 @@ public class FavController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/favs/put/client/{clientId}")
     public ResponseEntity<?> updateFav(@PathVariable final String clientId, @RequestBody Product product) {
-        System.out.println(clientId + " " + product);
         Optional<Fav> fav = favRepository.getFavByClient_Id(clientId);
 
-     //  if (!fav.isPresent()) {
-     //      return ResponseEntity.badRequest().body(new MessageResponse("Error: fav doesn't exist!"));
-     //  } else {
-     //      List<Product> favProducts = fav.get().getProducts();
-     //      if (favProducts == null) {
-     //          List<Product> newFavProducts = new ArrayList<Product>();
-     //          newFavProducts.add(product);
-     //          fav.get().setProducts(newFavProducts);
-     //      } else {
-     //          final Boolean[] Present = {false};
-     //          favProducts.forEach(fP -> {
-     //              if (fP.getId().equals(product.getId())) {
-     //                  Present[0] = true;
-     //              }
-     //          });
-     //          if (!Present[0]) {
-     //              fav.get().getProducts().add(product);
-     //          }
-     //      }
-     //      fav.get().setUpdatedAt(CurrentDateTime.getCurrentDateTime());
-     //
-     //  }
+        if (!fav.isPresent()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: fav doesn't exist!"));
+        } else {
+            List<Product> favProducts = fav.get().getProducts();
+            if (favProducts == null) {
+                List<Product> newFavProducts = new ArrayList<Product>();
+                newFavProducts.add(product);
+                fav.get().setProducts(newFavProducts);
+            } else {
+                final Boolean[] Present = {false};
+                favProducts.forEach(fP -> {
+                    if (fP.getId().equals(product.getId())) {
+                        Present[0] = true;
+                    }
+                });
+                if (!Present[0]) {
+                    fav.get().getProducts().add(product);
+                }
+            }
+            fav.get().setUpdatedAt(CurrentDateTime.getCurrentDateTime());
+
+        }
+        fav.ifPresent(favRepository::save);
         return ResponseEntity.ok(fav);
     }
 }

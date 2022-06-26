@@ -24,8 +24,6 @@ public class Fav {
     @Field
     private long updatedAt;
 
-    public Fav() {}
-
     public Fav(Client client, long createdAt) {
         this.client = client;
         this.createdAt = createdAt;
