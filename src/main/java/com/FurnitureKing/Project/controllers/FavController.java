@@ -54,7 +54,7 @@ public class FavController {
     }
 
     /* Delete 1 fav */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/favs/delete/product/{productId}/client/{clientId}")
     public ResponseEntity<?> deleteFav(@PathVariable final String clientId, @PathVariable final String productId) {
 
