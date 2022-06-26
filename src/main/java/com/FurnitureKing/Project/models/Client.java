@@ -67,9 +67,6 @@ public class Client {
     private Integer nbConnection;
 
     @Field
-    private List<String> favProduct;
-
-    @Field
     private long createdAt;
 
     @Field
@@ -77,7 +74,7 @@ public class Client {
 
     public Client(){}
 
-    public Client(String email, String password, Integer civility, String lastName, String firstName, String address, String postalCode, String city, String phone, Integer nbConnection, List<String> favProduct) {
+    public Client(String email, String password, Integer civility, String lastName, String firstName, String address, String postalCode, String city, String phone, Integer nbConnection) {
         this.email = email;
         this.passwordHash = password;
         this.civility = civility;
@@ -88,7 +85,6 @@ public class Client {
         this.city = city;
         this.phone = phone;
         this.nbConnection = nbConnection;
-        this.favProduct = favProduct;
     }
 
     public String getId() {return id;}
@@ -133,9 +129,6 @@ public class Client {
     public Integer getNbConnection() {return nbConnection;}
     public void setNbConnection(Integer nbConnection) {this.nbConnection = nbConnection;}
 
-    public List<String> getFavProduct() {return favProduct;}
-    public void setFavProduct(List<String> favProduct) {this.favProduct = favProduct;}
-
     public long getCreatedAt() {return createdAt;}
     public void setCreatedAt(long createdAt) {this.createdAt = createdAt;}
 
@@ -154,7 +147,6 @@ public class Client {
                 ", firstName=" + firstName +
                 ", phone=" + phone +
                 ", nbConnection=" + nbConnection +
-                ", favProduct='" + favProduct + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

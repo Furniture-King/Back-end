@@ -22,10 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
     @CrossOrigin(origins = "*", maxAge = 3600)
@@ -64,9 +61,9 @@ import java.util.stream.Collectors;
                     .map(item -> item.getAuthority())
                     .collect(Collectors.toList());
 
-            Optional<Client> Client = clientRepository.findByEmail(loginRequest.getEmail());
-            String idClient = Client.get().getId();
-
+            Optional<Client> client = clientRepository.findByEmail(loginRequest.getEmail());
+            String idClient = client.get().getId();
+            client.get().setNbConnection(client.get().getNbConnection() + 1);
             return ResponseEntity.ok(new JwtResponse(jwt,
                     idClient,
                     userDetails.getUsername(),
@@ -93,8 +90,7 @@ import java.util.stream.Collectors;
                     signUpRequest.getPostalCode(),
                     signUpRequest.getCity(),
                     signUpRequest.getPhone(),
-                    signUpRequest.getNbConnection(),
-                    signUpRequest.getFavProduct()
+                    signUpRequest.getNbConnection()
             );
 
             Set<String> strRoles = signUpRequest.getRoles();
@@ -127,6 +123,8 @@ import java.util.stream.Collectors;
             basket.setBasketTotalPrice(0.0);
             basketRepository.insert(basket);
             Fav fav = new Fav(client,CurrentDateTime.getCurrentDateTime());
+            List<Product> listProduct = new ArrayList<>();
+            fav.setProducts(listProduct);
             favRepository.insert(fav);
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         }

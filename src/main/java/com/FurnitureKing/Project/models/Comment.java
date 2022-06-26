@@ -35,7 +35,6 @@ public class Comment {
     @Field
     private long updatedAt;
 
-    public Comment() {}
 
     public Comment(Set<Client> client, Set<Product> product, Integer note, String comment) {
         this.client = client;

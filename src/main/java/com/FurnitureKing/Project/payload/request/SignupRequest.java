@@ -44,9 +44,6 @@ public class SignupRequest {
     private Integer nbConnection;
 
 
-    private List<String> favProduct;
-
-
     private long createdAt;
 
     private String password;
@@ -83,7 +80,6 @@ public class SignupRequest {
         return nbConnection;
     }
 
-    public List<String> getFavProduct() {return favProduct;}
 
     public long getCreatedAt() {
         return createdAt;

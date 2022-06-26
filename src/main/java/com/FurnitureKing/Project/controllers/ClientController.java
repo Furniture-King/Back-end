@@ -95,7 +95,6 @@ public class ClientController {
                 c.setPostalCode(clientUpdate.getPostalCode());
                 c.setCity(clientUpdate.getCity());
                 c.setPhone(clientUpdate.getPhone());
-                c.setFavProduct(clientUpdate.getFavProduct());
                 c.setUpdatedAt(CurrentDateTime.getCurrentDateTime());
                 clientRepository.save(c);
             });

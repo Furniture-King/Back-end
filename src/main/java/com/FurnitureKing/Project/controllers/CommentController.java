@@ -28,32 +28,6 @@ public class CommentController {
         return ResponseEntity.ok(commentList);
     }
 
-    // /* Get all comments from 1 client*/
-    // @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    // @GetMapping("/comments/client/{clientId}")
-    // public List<Comment> getClientComments(@PathVariable final ObjectId clientId) {
-    //     List<Comment> comments = commentRepository.findCommentByClientAndId(clientId);
-    //     if(comments.isEmpty()){
-    //         return (List<Comment>) ResponseEntity.notFound().build();
-    //     }else{
-    //
-    //         return (List<Comment>) ResponseEntity.ok(comments);
-    //     }
-    // }
-    //
-    // /* Get all comments from 1 product*/
-    // @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    // @GetMapping("/comments/product/{productId}")
-    // public List<Comment> getProductComments(@PathVariable final ObjectId productId) {
-    //     List<Comment> comments = commentRepository.findCommentsByProductAndIdEquals(productId);
-    //     if(comments.isEmpty()){
-    //         return (List<Comment>) ResponseEntity.notFound().build();
-    //     }else{
-    //
-    //         return (List<Comment>) ResponseEntity.ok(comments);
-    //     }
-    // }
-
     /* Create comment */
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/comments/post")

@@ -42,6 +42,21 @@ public class Product {
 
     public Product() {}
 
+    public Product(String id, String categoryName, String name, String color, Integer stock, Float stars, Float width, Float length, Double price, String description, String desc1, String desc2) {
+        this.id = id;
+        this.categoryName = categoryName;
+        this.name = name;
+        this.color = color;
+        this.stock = stock;
+        this.stars = stars;
+        this.width = width;
+        this.length = length;
+        this.price = price;
+        this.description = description;
+        this.desc1 = desc1;
+        this.desc2 = desc2;
+    }
+
     public Product(
             String id,
             String categoryName,

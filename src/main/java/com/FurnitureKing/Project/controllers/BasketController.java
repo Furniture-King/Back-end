@@ -91,12 +91,11 @@ public class BasketController {
                 return ResponseEntity.notFound().build();
             }else{
                 // il y a des produits
-                List<BasketTab> newBasketTab = new ArrayList<BasketTab>();
+                List<BasketTab> newBasketTab = new ArrayList<>();
 
                 BasketTab.forEach(bT ->{
                     // pour chaque produits
-                        Integer count = 0;
-                    if (!bT.getProduct().getId().toString().equals(productId.toString())){
+                    if (!bT.getProduct().getId().equals(productId)){
                         newBasketTab.add(bT);
                     }
                 });
@@ -127,14 +126,14 @@ public class BasketController {
         if(Basket.isPresent()) {
             List<BasketTab> BasketTab = Basket.get().getBasketTab();
             if (BasketTab == null) {
-                List<BasketTab> newBasketTab = new ArrayList<BasketTab>();
+                List<BasketTab> newBasketTab = new ArrayList<>();
                 newBasketTab.add(basketTab);
                 newBasketTab.get(0).setPriceProduct(newBasketTab.get(0).getProduct().getPrice() * newBasketTab.get(0).getQté());
                 Basket.get().setBasketTab(newBasketTab);
             } else {
                 final Boolean[] Present = {false};
                 BasketTab.forEach(bT -> {
-                    if (bT.getProduct().getId().equals(basketTab.getProduct().getId().toString())) {
+                    if (bT.getProduct().getId().equals(basketTab.getProduct().getId())) {
                         Present[0] = true;
                         if (basketTab.getQté() == null) {
                             bT.setQté(1);
