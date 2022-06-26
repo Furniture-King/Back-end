@@ -24,32 +24,50 @@ public class Fav {
     @Field
     private long updatedAt;
 
-
-    public Fav(String id, Client client, List<Product> product, long createdAt) {
-        this.id = id;
-        this.client = client;
-        this.products = product;
-        this.createdAt = createdAt;
-    }
-
+    public Fav() {}
 
     public Fav(Client client, long createdAt) {
         this.client = client;
         this.createdAt = createdAt;
     }
 
-    public String getId() {return id;}
-    public void setId(String id) {this.id = id;}
+    public String getId() {
+        return id;
+    }
 
-    public Client getClient() {return client;}
-    public void setClient(Client client) {this.client = client;}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public List<Product> getProducts() {return products;}
-    public void setProducts(List<Product> products) {this.products = products;}
+    public Client getClient() {
+        return client;
+    }
 
-    public long getCreatedAt() {return createdAt;}
-    public void setCreatedAt(long createdAt) {this.createdAt = createdAt;}
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
-    public long getUpdatedAt() {return updatedAt;}
-    public void setUpdatedAt(long updatedAt) {this.updatedAt = updatedAt;}
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }

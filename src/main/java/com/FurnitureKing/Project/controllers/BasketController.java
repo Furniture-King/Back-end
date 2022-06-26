@@ -84,6 +84,7 @@ public class BasketController {
     public ResponseEntity<?> deleteBasket(@PathVariable final String productId ,@PathVariable final String clientId ) {
 
         Optional<Basket> Basket = basketRepository.getBasketByClient_Id(clientId);
+
         if (Basket.isPresent()) {
             List<BasketTab> BasketTab = Basket.get().getBasketTab();
             if(BasketTab == null){

@@ -12,4 +12,5 @@ public interface FavRepository
         extends MongoRepository<Fav, String> {
 
     Optional<Fav> getFavByClient_Id(String clientId);
+
 }
